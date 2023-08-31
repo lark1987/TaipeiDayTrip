@@ -40,14 +40,19 @@ def api_attractions():
 	try:
 		keyword=request.args.get("keyword")
 		page=int(request.args.get("page"))
-		page_start=(page-1)*12
-		cursor.execute("SELECT * FROM attractions WHERE MRT=%s or name LIKE %s LIMIT %s,12",
+		page_start=page*12
+
+		if keyword is not None:
+			cursor.execute("SELECT * FROM attractions WHERE MRT=%s or name LIKE %s LIMIT %s,12",
 						(keyword,"%"+keyword+"%",page_start))
+		else:			
+			cursor.execute("SELECT * FROM attractions LIMIT %s,12",(page_start,))
+
 		SQLdata=cursor.fetchall()
 		response_data=get_attractions_data(SQLdata)
 		response={
-			"nextPage": page,
-  			"data": response_data
+			"nextPage":page+1,
+  			"data":response_data
 		}
 		return jsonify(response)
 	
