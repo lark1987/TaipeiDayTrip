@@ -1,4 +1,5 @@
 import mysql.connector
+from mysql.connector import pooling
 import json
 import re
 
@@ -7,12 +8,17 @@ app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 
-# 建立與 MySQL 資料庫的連線
-db_connection=mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="12345678",
-    database="Trip")
+# MySQL資料庫連線
+db_config={
+    "host":"localhost",
+    "user":"root",
+    "password":"12345678",
+    "database":"Trip",
+	"connection_timeout":172800,
+}
+
+connection_pool=pooling.MySQLConnectionPool(**db_config)
+db_connection=connection_pool.get_connection()
 cursor=db_connection.cursor()
 
 # Pages
@@ -147,4 +153,5 @@ def get_attractions_data(SQLdata):
 app.run(host="0.0.0.0", port=3000)
 
 cursor.close()
-db_connection.close()
+db_connection.release()
+connection_pool.close()
