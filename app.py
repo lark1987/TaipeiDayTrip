@@ -18,8 +18,8 @@ db_config={
 }
 
 connection_pool=pooling.MySQLConnectionPool(**db_config)
-db_connection=connection_pool.get_connection()
-cursor=db_connection.cursor()
+# db_connection=connection_pool.get_connection()
+# cursor=db_connection.cursor()
 
 # Pages
 @app.route("/")
@@ -44,6 +44,9 @@ def thankyou():
 @app.route("/api/attractions")
 def api_attractions():
 	try:
+		db_connection=connection_pool.get_connection()
+		cursor=db_connection.cursor()
+
 		keyword=request.args.get("keyword")
 		page=int(request.args.get("page"))
 		page_start=page*12
@@ -60,6 +63,9 @@ def api_attractions():
 			"nextPage":page+1,
   			"data":response_data
 		}
+
+		cursor.close()
+		db_connection.close()
 		return jsonify(response)
 	
 	except Exception as e :  
@@ -73,13 +79,19 @@ def api_attractions():
 # 根據景點編號取得景點資料
 @app.route("/api/attractions/<int:attractionId>")
 def api_attractions_id(attractionId):
-	try:	
+	try:
+		db_connection=connection_pool.get_connection()
+		cursor=db_connection.cursor()
+
 		cursor.execute("SELECT * FROM attractions WHERE id=%s",(attractionId,))
 		SQLdata=cursor.fetchall()
 		response_data=get_attractions_data(SQLdata)
 		response={
   			"data": response_data[0]
 		}
+
+		cursor.close()
+		db_connection.close()
 		return jsonify(response)
 	except IndexError as e :  
 		error_message=str(e)
@@ -100,6 +112,9 @@ def api_attractions_id(attractionId):
 @app.route("/api/mrts")
 def api_mrts():
 	try:
+		db_connection=connection_pool.get_connection()
+		cursor=db_connection.cursor()
+
 		query='''
 		SELECT MRT, COUNT(name) as attraction_Number 
 		FROM attractions GROUP BY MRT ORDER BY attraction_Number DESC
@@ -112,6 +127,9 @@ def api_mrts():
 		response={
 				"data": mrt_list
 		}
+
+		cursor.close()
+		db_connection.close()
 		return jsonify(response)
 
 	except Exception as e :  
@@ -151,7 +169,3 @@ def get_attractions_data(SQLdata):
 
 
 app.run(host="0.0.0.0", port=3000)
-
-cursor.close()
-db_connection.release()
-connection_pool.close()
