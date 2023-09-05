@@ -1,27 +1,20 @@
-
-
-
-
-
-// 網頁刷新加載資訊
-document.addEventListener("DOMContentLoaded", function () {
-
-    fetch("/api/attractions?page=0", {
+// 連線取得資料
+let nextPage = ""
+function getData(url){
+    fetch(url, {
         method: 'GET',
     })
     .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
         return response.json();
     })
     .then(data => {
-        data=data.data
         console.log(data); //待刪除
+        nextPage=data.nextPage
+        data=data.data
 
         let attraction_name = document.querySelectorAll(".attraction_name");
         let attraction_info = document.querySelectorAll(".attraction_info");
-        let attraction_image = document.querySelectorAll(".t");
+        let attraction_image = document.querySelectorAll(".attraction");
 
         data.forEach(function(item, index) {
 
@@ -40,21 +33,52 @@ document.addEventListener("DOMContentLoaded", function () {
             const picture = document.createElement("img");
             picture.setAttribute("src", item.images[0]);
             attraction_image[index].appendChild(picture);
-
         })
-
-
-
-
-
-        
-
-
-
-
     })
     .catch(error => {
         console.error(error);
     });
+}
+
+// 網頁刷新加載資訊
+document.addEventListener("DOMContentLoaded", function () {
+    url="/api/attractions?page=0"
+    getData(url);
 });
 
+
+
+
+// IntersectionObserver 的回調函數
+const intersectionCallback = (entries, observer) => {
+        if (entries[0].isIntersecting) {
+            duplicateItems(); // 複製現有項目
+        }
+};
+
+// 創建 IntersectionObserver 實例
+const options = {
+    root: null, // 使用 viewport 作為根
+    rootMargin: '0px',
+    threshold: 1, // 當目標元素的 100% 可見時觸發回調
+};
+const observer = new IntersectionObserver(intersectionCallback, options);
+
+// 監視 content 區域
+const content = document.getElementById('content');
+observer.observe(content);
+
+// 複製現有項目並添加到 content
+function duplicateItems() {
+    console.log('页面已滚动到最下方');
+    console.log(nextPage);
+    // url="/api/attractions?page="+nextPage
+    // getData(url)
+
+    // const items = document.querySelectorAll('.main');
+    // items.forEach(item => {
+    //     const newItem = item.cloneNode(true); // 複製現有項目
+    //     getData(url)
+    // });
+
+}
