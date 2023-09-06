@@ -1,42 +1,71 @@
-// 連線取得資料
-let nextPage = ""
-function getData(url){
-    fetch(url, {
-        method: 'GET',
-    })
-    .then(response => {
-        return response.json();
-    })
-    .then(data => {
-        console.log(data); //待刪除
-        nextPage=data.nextPage
-        data=data.data
+let nextPage = "";
+const cache = {}; // 创建一个缓存对象 (好像可以刪掉了)
 
-        let attraction_name = document.querySelectorAll(".attraction_name");
-        let attraction_info = document.querySelectorAll(".attraction_info");
-        let attraction_image = document.querySelectorAll(".attraction");
+// 从sessionStorage获取缓存数据
+function getCacheData(url) {
+    const cachedData = sessionStorage.getItem(url);
+    if (cachedData) {
+        return JSON.parse(cachedData);
+    }
+    return null;
+}
 
-        data.forEach(function(item, index) {
+// 将数据存储到sessionStorage
+function setCacheData(url, data) {
+    sessionStorage.setItem(url, JSON.stringify(data));
+}
 
-            // 載入景點名稱
-            attraction_name[index].textContent="　"+item.name;
-
-            // 載入景點資訊
-            const span1 = document.createElement("span");
-            span1.textContent = item.mrt;
-            const span2 = document.createElement("span");
-            span2.textContent = item.category;
-            attraction_info[index].appendChild(span1);
-            attraction_info[index].appendChild(span2);
-
-            // 載入景點圖片
-            const picture = document.createElement("img");
-            picture.setAttribute("src", item.images[0]);
-            attraction_image[index].appendChild(picture);
+// 連線取得資料存入緩存，或使用緩存資料，得到data跟nextPage
+function getData(url) {
+    const cachedData = getCacheData(url);
+    if (cachedData) { // 如果有缓存数据 直接使用缓存数据，不发送新的请求
+        handleData(cachedData);
+        console.log(cachedData); //待刪除
+        console.log("沒有連線")
+        return;
+    }
+    else{fetch(url, {
+            method: 'GET',
         })
-    })
-    .catch(error => {
-        console.error(error);
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            console.log(data); // 待刪除
+            nextPage = data.nextPage;
+            data = data.data;
+            setCacheData(url, data); // 存入缓存
+            handleData(data);
+            console.log("有連線")// 待刪除
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    }
+}
+
+// 處理資料呈現
+function handleData(data) {
+    let attraction_name = document.querySelectorAll(".attraction_name");
+    let attraction_info = document.querySelectorAll(".attraction_info");
+    let attraction_image = document.querySelectorAll(".attraction");
+
+    data.forEach(function (item, index) {
+        // 載入景點名稱
+        attraction_name[index].textContent = "　" + item.name;
+
+        // 載入景點資訊
+        const span1 = document.createElement("span");
+        span1.textContent = item.mrt;
+        const span2 = document.createElement("span");
+        span2.textContent = item.category;
+        attraction_info[index].appendChild(span1);
+        attraction_info[index].appendChild(span2);
+
+        // 載入景點圖片
+        const picture = document.createElement("img");
+        picture.setAttribute("src", item.images[0]);
+        attraction_image[index].appendChild(picture);
     });
 }
 
@@ -49,36 +78,91 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-// IntersectionObserver 的回調函數
-const intersectionCallback = (entries, observer) => {
-        if (entries[0].isIntersecting) {
-            duplicateItems(); // 複製現有項目
-        }
-};
 
-// 創建 IntersectionObserver 實例
-const options = {
-    root: null, // 使用 viewport 作為根
-    rootMargin: '0px',
-    threshold: 1, // 當目標元素的 100% 可見時觸發回調
-};
-const observer = new IntersectionObserver(intersectionCallback, options);
 
-// 監視 content 區域
-const content = document.getElementById('content');
-observer.observe(content);
 
-// 複製現有項目並添加到 content
-function duplicateItems() {
-    console.log('页面已滚动到最下方');
-    console.log(nextPage);
+
+
+
+
+
+
+
+
+
+// 下方是滾動卡住的區塊
+
+
+// // IntersectionObserver 的回調函數
+// const intersectionCallback = (entries, observer) => {
+//         if (entries[0].isIntersecting) {
+//             duplicateItems(); // 複製現有項目
+//         }
+// };
+
+// // 創建 IntersectionObserver 實例
+// const options = {
+//     root: null, // 使用 viewport 作為根
+//     rootMargin: '0px',
+//     threshold: 1, // 當目標元素的 100% 可見時觸發回調
+// };
+// const observer = new IntersectionObserver(intersectionCallback, options);
+
+// // 監視 content 區域
+// const content = document.getElementById('content');
+// observer.observe(content);
+
+// // 複製現有項目並添加到 content
+// function duplicateItems() {
+//     console.log('页面已滚动到最下方');
+//     console.log(nextPage);
+
     // url="/api/attractions?page="+nextPage
     // getData(url)
 
     // const items = document.querySelectorAll('.main');
+    // const newItemFragment = document.createDocumentFragment(); // 创建一个新的文档片段，用于存储克隆的元素
     // items.forEach(item => {
-    //     const newItem = item.cloneNode(true); // 複製現有項目
-    //     getData(url)
+    //     const newItem = item.cloneNode(true);
+    //     newItemFragment.appendChild(newItem);
     // });
+    
+    // const content = document.getElementById('content');
+    // content.appendChild(newItemFragment);
 
-}
+// }
+
+
+
+
+
+
+
+
+
+
+// 關鍵字搜尋功能
+// const search_button = document.getElementById("search_button");
+// search_button.addEventListener("click", function () {
+
+//     const search_input = document.getElementById("search_input");
+//     const search_value = search_input.value;
+//     url="/api/attractions?page=0&keyword="+search_value
+
+//     console.log(search_value)
+
+//     fetch(url, {
+//         method: 'GET',
+//     })
+//     .then(response => {
+//         return response.json();
+//     })
+//     .then(data => {
+//         console.log(data);
+//     })
+//     .catch(error => {
+//         console.error(error);
+//     });
+
+
+// })
