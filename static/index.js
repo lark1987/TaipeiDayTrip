@@ -105,16 +105,15 @@ const observer = new IntersectionObserver(entries => {
 
         console.log("底部區域")
 
-        // 防止連續點擊
+        // 防止連續呼叫
         if (isClickable) {
             isClickable = false;
 
-            console.log("延遲測試")
             url="/api/attractions?page="+nextPage;
             console.log(url);// 待刪除
             getData(url);
     
-            setTimeout(() => {isClickable = true;}, 3000); 
+            setTimeout(() => {isClickable = true;}, 2000); 
         }
     } 
 });
@@ -129,7 +128,11 @@ search_button.addEventListener("click", function () {
     const search_input = document.getElementById("search_input");
     const search_value = search_input.value;
     url="/api/attractions?page=0&keyword="+search_value
+    console.log(url)
 
-    console.log(search_value)
-    // getData(url);
+    const mains = document.querySelectorAll(".main");
+    mains.forEach(main => {
+        main.parentNode.removeChild(main);
+    })
+    getData(url);
 })
