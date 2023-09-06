@@ -1,4 +1,5 @@
-let nextPage = "";
+let nextPage = 0;
+nextPage = Math.min(nextPage, 5);
 const cache = {}; // 创建一个缓存对象 (好像可以刪掉了)
 
 // 从sessionStorage获取缓存数据
@@ -7,7 +8,6 @@ function getCacheData(url) {
     if (cachedData) {
         return JSON.parse(cachedData);
     }
-    return null;
 }
 
 // 将数据存储到sessionStorage
@@ -31,11 +31,9 @@ function getData(url) {
             return response.json();
         })
         .then(data => {
-            console.log(data); // 待刪除
-            nextPage = data.nextPage;
-            data = data.data;
             setCacheData(url, data); // 存入缓存
             handleData(data);
+            console.log(data); // 待刪除
             console.log("有連線")// 待刪除
         })
         .catch(error => {
@@ -46,6 +44,9 @@ function getData(url) {
 
 // 創建 div 載入資料
 function handleData(data){
+
+    nextPage = data.nextPage;
+    data = data.data;
 
     const gridContainer = document.getElementById("gridContainer");
     let gridCount = 0;
@@ -92,8 +93,8 @@ function handleData(data){
 
 const generateButton = document.getElementById("generateButton");
 generateButton.addEventListener("click", () => {
-    console.log("123");
-    url="/api/attractions?page=0"
+    url="/api/attractions?page="+nextPage;
+    console.log(url);
     getData(url);
 });
 
