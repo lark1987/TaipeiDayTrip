@@ -44,37 +44,60 @@ function getData(url) {
     }
 }
 
-// 處理資料呈現
-function handleData(data) {
-    let attraction_name = document.querySelectorAll(".attraction_name");
-    let attraction_info = document.querySelectorAll(".attraction_info");
-    let attraction_image = document.querySelectorAll(".attraction");
+// 創建 div 載入資料
+function handleData(data){
+
+    const gridContainer = document.getElementById("gridContainer");
+    let gridCount = 0;
+
+    let mainDiv = document.createElement("div");
+    mainDiv.classList.add("main");
 
     data.forEach(function (item, index) {
-        // 載入景點名稱
-        attraction_name[index].textContent = "　" + item.name;
 
-        // 載入景點資訊
-        const span1 = document.createElement("span");
-        span1.textContent = item.mrt;
-        const span2 = document.createElement("span");
-        span2.textContent = item.category;
-        attraction_info[index].appendChild(span1);
-        attraction_info[index].appendChild(span2);
+        let Div = document.createElement("div");
+        Div.classList.add("attraction");
 
         // 載入景點圖片
-        const picture = document.createElement("img");
-        picture.setAttribute("src", item.images[0]);
-        attraction_image[index].appendChild(picture);
+        let PictureDiv = document.createElement("img");
+        PictureDiv.setAttribute("src",item.images[0]);
+
+        // 載入景點名稱
+        let NameDiv = document.createElement("div");
+        NameDiv.classList.add("attraction_name");
+        let NameText = document.createTextNode(item.name); 
+        NameDiv.appendChild(NameText);
+
+         // 載入景點資訊
+        let InfoDiv = document.createElement("div");
+        InfoDiv.classList.add("attraction_info");
+        let span1 = document.createElement("span");
+        span1.textContent = item.mrt;
+        let span2 = document.createElement("span");
+        span2.textContent = item.category;
+        InfoDiv.appendChild(span1);
+        InfoDiv.appendChild(span2);
+
+        // 全部放進 main
+        Div.appendChild(PictureDiv);
+        Div.appendChild(NameDiv);
+        Div.appendChild(InfoDiv);
+        mainDiv.appendChild(Div);
     });
+    
+    gridContainer.appendChild(mainDiv);
+    gridCount++;
+
 }
 
-// 網頁刷新加載資訊
-document.addEventListener("DOMContentLoaded", function () {
+const generateButton = document.getElementById("generateButton");
+generateButton.addEventListener("click", () => {
+    console.log("123");
     url="/api/attractions?page=0"
     getData(url);
 });
 
+console.log("456");
 
 
 
@@ -84,13 +107,46 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+// // 處理資料呈現
+// function handleData(data) {
+//     let attraction_name = document.querySelectorAll(".attraction_name");
+//     let attraction_info = document.querySelectorAll(".attraction_info");
+//     let attraction_image = document.querySelectorAll(".attraction");
+
+//     data.forEach(function (item, index) {
+//         // 載入景點名稱
+//         attraction_name[index].textContent = "　" + item.name;
+
+//         // 載入景點資訊
+//         const span1 = document.createElement("span");
+//         span1.textContent = item.mrt;
+//         const span2 = document.createElement("span");
+//         span2.textContent = item.category;
+//         attraction_info[index].appendChild(span1);
+//         attraction_info[index].appendChild(span2);
+
+//         // 載入景點圖片
+//         const picture = document.createElement("img");
+//         picture.setAttribute("src", item.images[0]);
+//         attraction_image[index].appendChild(picture);
+//     });
+// }
+
+// 網頁刷新加載資訊
+// document.addEventListener("DOMContentLoaded", function () {
+//     url="/api/attractions?page=0"
+//     getData(url);
+// });
 
 
 
 
 
 
-// 下方是滾動卡住的區塊
+
+
+
+// 下方是滾動到底部
 
 
 // // IntersectionObserver 的回調函數
