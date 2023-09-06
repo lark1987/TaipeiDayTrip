@@ -1,3 +1,4 @@
+
 let nextPage = 0;
 
 // 獲取緩存資料
@@ -88,16 +89,6 @@ function handleData(data){
 
 }
 
-const generateButton = document.getElementById("generateButton");
-generateButton.addEventListener("click", () => {
-    url="/api/attractions?page="+nextPage;
-    console.log(url);// 待刪除
-    getData(url);
-});
-
-console.log("456");
-
-
 // 網頁刷新加載資訊
 // document.addEventListener("DOMContentLoaded", function () {
 //     url="/api/attractions?page=0"
@@ -106,42 +97,39 @@ console.log("456");
 
 
 // 滾動到底部加載資料
+let isClickable = true;
 const targetElement = document.getElementById('footer');
 const observer = new IntersectionObserver(entries => {
     const targetEntry = entries[0];
     if (targetEntry.isIntersecting) {
+
         console.log("底部區域")
-      } 
-    });
+
+        // 防止連續點擊
+        if (isClickable) {
+            isClickable = false;
+
+            console.log("延遲測試")
+            url="/api/attractions?page="+nextPage;
+            console.log(url);// 待刪除
+            getData(url);
+    
+            setTimeout(() => {isClickable = true;}, 3000); 
+        }
+    } 
+});
 observer.observe(targetElement);
 
 
 
-
-
-
 // 關鍵字搜尋功能
-// const search_button = document.getElementById("search_button");
-// search_button.addEventListener("click", function () {
+const search_button = document.getElementById("search_button");
+search_button.addEventListener("click", function () {
 
-//     const search_input = document.getElementById("search_input");
-//     const search_value = search_input.value;
-//     url="/api/attractions?page=0&keyword="+search_value
+    const search_input = document.getElementById("search_input");
+    const search_value = search_input.value;
+    url="/api/attractions?page=0&keyword="+search_value
 
-//     console.log(search_value)
-
-//     fetch(url, {
-//         method: 'GET',
-//     })
-//     .then(response => {
-//         return response.json();
-//     })
-//     .then(data => {
-//         console.log(data);
-//     })
-//     .catch(error => {
-//         console.error(error);
-//     });
-
-
-// })
+    console.log(search_value)
+    // getData(url);
+})
