@@ -64,3 +64,8 @@ footer{width:100%;position:relative;left:0;bottom:0;z-index:-1;
 @media screen and (max-width:600px){
       .main{display:flex;flex-direction:column;row-gap:20px;max-width:90%;}
 }
+
+
+.scroll_container {display:flex; }
+.list_container {overflow-x: hidden;}
+    
