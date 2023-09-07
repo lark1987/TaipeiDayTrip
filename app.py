@@ -58,10 +58,17 @@ def api_attractions():
 			cursor.execute("SELECT * FROM attractions LIMIT %s,12",(page_start,))
 
 		SQLdata=cursor.fetchall()
+
+		if cursor.rowcount == 0:
+			next_page=None
+		else:
+			next_page=page+1
+
+
 		response_data=get_attractions_data(SQLdata)
 		response={
-			"nextPage":page+1,
-  			"data":response_data
+			"nextPage":next_page,
+  			"data":response_data,
 		}
 
 		cursor.close()

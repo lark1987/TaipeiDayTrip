@@ -1,5 +1,6 @@
 
 let nextPage = 0;
+let search_value = "";
 
 // 獲取緩存資料
 function getCacheData(url) {
@@ -19,7 +20,6 @@ function getData(url) {
     const cachedData = getCacheData(url);
     if (cachedData) {
         handleData(cachedData);
-        console.log(cachedData); //待刪除
         console.log("沒有連線")
         return;
     }
@@ -32,7 +32,6 @@ function getData(url) {
         .then(data => {
             setCacheData(url, data); 
             handleData(data);
-            console.log(data); // 待刪除
             console.log("有連線")
         })
         .catch(error => {
@@ -45,7 +44,6 @@ function getData(url) {
 function handleData(data){
 
     nextPage = data.nextPage;
-    nextPage = Math.min(nextPage, 5);
     data = data.data;
     
     const gridContainer = document.getElementById("gridContainer");
@@ -89,36 +87,35 @@ function handleData(data){
 
 }
 
-// 網頁刷新加載資訊
-// document.addEventListener("DOMContentLoaded", function () {
-//     url="/api/attractions?page=0"
-//     getData(url);
-// });
-
-
-// 滾動到底部加載資料
+// 看見底部加載資料
 let isClickable = true;
 const targetElement = document.getElementById('footer');
 const observer = new IntersectionObserver(entries => {
     const targetEntry = entries[0];
     if (targetEntry.isIntersecting) {
-
         console.log("底部區域")
 
         // 防止連續呼叫
         if (isClickable) {
             isClickable = false;
 
-            url="/api/attractions?page="+nextPage;
-            console.log(url);// 待刪除
-            getData(url);
-    
-            setTimeout(() => {isClickable = true;}, 2000); 
-        }
-    } 
+            let url="/api/attractions?"
+
+            if(search_value !== null && nextPage !== null){
+                url+="keyword="+search_value+"&page="+nextPage;
+                console.log(url); // 待刪除
+                getData(url);
+            }
+            else if(nextPage !== null) {
+                url+="page="+nextPage;
+                console.log(url); // 待刪除
+                getData(url);
+            }
+        }       
+            setTimeout(() => {isClickable = true;}, 1000); 
+    }
 });
 observer.observe(targetElement);
-
 
 
 // 關鍵字搜尋功能
@@ -126,7 +123,7 @@ const search_button = document.getElementById("search_button");
 search_button.addEventListener("click", function () {
 
     const search_input = document.getElementById("search_input");
-    const search_value = search_input.value;
+    search_value = search_input.value;
     url="/api/attractions?page=0&keyword="+search_value
     console.log(url)
 
@@ -134,5 +131,7 @@ search_button.addEventListener("click", function () {
     mains.forEach(main => {
         main.parentNode.removeChild(main);
     })
+
     getData(url);
+
 })
