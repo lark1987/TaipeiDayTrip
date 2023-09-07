@@ -20,11 +20,11 @@ function getData(url) {
     const cachedData = getCacheData(url);
     if (cachedData) {
 
-        // if(url="/api/mrts"){
-        //     handleMRT(cachedData);
-        //     console.log("沒有連線")
-        //     return;
-        // }
+        if(url==="/api/mrts"){
+            handleMRT(cachedData);
+            console.log("沒有連線")
+            return;
+        }
 
         handleData(cachedData);
         console.log("沒有連線")
@@ -38,12 +38,13 @@ function getData(url) {
         })
         .then(data => {
 
-            // if(url="/api/mrts"){
-            //     setCacheData(url, data); 
-            //     handleMRT(data);
-            //     console.log("有連線")
-            //     return;
-            // }
+            if(url==="/api/mrts"){
+                console.log(data)
+                setCacheData(url, data); 
+                handleMRT(data);
+                console.log("有連線")
+                return;
+            }
 
             setCacheData(url, data); 
             handleData(data);
@@ -128,18 +129,22 @@ const observer = new IntersectionObserver(entries => {
                 getData(url);
             }
         }       
-            setTimeout(() => {isClickable = true;}, 1000); 
+            setTimeout(() => {isClickable = true;}, 2000); 
     }
 });
 observer.observe(targetElement);
 
 
-// 關鍵字搜尋功能
+// 關鍵字搜尋按鈕
 const search_button = document.getElementById("search_button");
-search_button.addEventListener("click", function () {
+search_button.addEventListener("click", function(){
+        const search_input = document.getElementById("search_input");
+        search_value = search_input.value;
+        searchData(search_value)
+})
 
-    const search_input = document.getElementById("search_input");
-    search_value = search_input.value;
+// 關鍵字搜尋加載資料
+function searchData (search_value) {
     url="/api/attractions?page=0&keyword="+search_value
     console.log(url)
 
@@ -149,82 +154,52 @@ search_button.addEventListener("click", function () {
     })
 
     getData(url);
-
-})
-
-
-
-
+}
 
 
 // 捷運站列表水平滾動
 const scrollContainer = document.querySelector(".scroll_container");
 const scrollLeftButton = document.querySelector("#scroll_left");
 const scrollRightButton = document.querySelector("#scroll_right");
+const list_container = document.querySelector(".list_container");
 
 scrollLeftButton.addEventListener("click", () => {
-  listContainer.scrollBy({
-    left: -100, // 设置滚动距离
-    behavior: "smooth", // 平滑滚动效果
+    list_container.scrollBy({
+    left: -1000, 
+    behavior: "smooth", 
   });
 });
 
 scrollRightButton.addEventListener("click", () => {
-  listContainer.scrollBy({
-    left: 100, // 设置滚动距离
-    behavior: "smooth", // 平滑滚动效果
+    list_container.scrollBy({
+    left: 1000, 
+    behavior: "smooth", 
   });
 });
 
-
-
-
-
-
-
-// 等等從這裡開始，先把各自點擊事件做完，再來帶資料
+window.addEventListener("load", () => {
+        url="/api/mrts"
+        getData(url);
+})
 
 
 // 創建 div 載入捷運列表
-const listContainer = document.querySelector(".list_container");
 function handleMRT(data){
 
-    let mrtDiv = document.createElement("div");
-    mrtDiv.classList.add("mrt_list");
-    mrtDiv.textContent = data;
-    listContainer.appendChild(mrtDiv);
-
-    /////////////////////////////////////////////////
-
-    var data = ["新北投", "劍潭", "關渡"];
-
-    // 取得父元素
-    var itemList = document.getElementById('itemList');
-
-    // 遍歷數據並動態生成<li>元素
-    for (var i = 0; i < data.length; i++) {
-        var item = document.createElement('li');
-        item.textContent = data[i];
-        itemList.appendChild(item);
-    }
-
-    // 添加點擊事件監聽器到父元素
-    itemList.addEventListener('click', function(event) {
-        // 確保點擊的是 li 元素
-        if (event.target.tagName === 'LI') {
-            var selectedItem = event.target.innerText;
-            alert('選中的值是：' + selectedItem);
-        }
+    data=data.data
+    data.forEach(itemText => {
+        let item = document.createElement("li");
+        item.textContent = itemText;
+        list_container.appendChild(item);
     });
-
-
 }
 
+// 捷運列表點擊處理
+list_container.addEventListener("click", function(event) {
+    if (event.target.tagName === "LI") {
+        search_value = event.target.innerText;
+        console.log(search_value);
+        searchData(search_value)
+    }
+});
 
-const testButton = document.querySelector("#test");
-testButton.addEventListener("click", () => {
-    // url="/api/mrts"
-    // getData(url);
-
-    handleMRT(123)
-})

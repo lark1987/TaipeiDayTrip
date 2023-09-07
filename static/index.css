@@ -67,5 +67,6 @@ footer{width:100%;position:relative;left:0;bottom:0;z-index:-1;
 
 
 .scroll_container {display:flex; }
-.list_container {overflow-x: hidden;}
+.list_container {overflow-x: hidden;white-space: nowrap;display:flex; }
+.list_container li {list-style: none;margin:0 10px;}
     
