@@ -4,7 +4,7 @@ let search_value = "";
 
 // 獲取緩存資料
 function getCacheData(url) {
-    const cachedData = sessionStorage.getItem(url);
+    const cachedData=sessionStorage.getItem(url);
     if (cachedData) {
         return JSON.parse(cachedData);
     }
@@ -19,15 +19,11 @@ function setCacheData(url, data) {
 function getData(url) {
     const cachedData = getCacheData(url);
     if (cachedData) {
-
         if(url==="/api/mrts"){
             handleMRT(cachedData);
-            console.log("沒有連線")
             return;
         }
-
         handleData(cachedData);
-        console.log("沒有連線")
         return;
     }
     else{fetch(url, {
@@ -37,18 +33,13 @@ function getData(url) {
             return response.json();
         })
         .then(data => {
-
             if(url==="/api/mrts"){
-                console.log(data)
                 setCacheData(url, data); 
                 handleMRT(data);
-                console.log("有連線")
                 return;
             }
-
             setCacheData(url, data); 
             handleData(data);
-            console.log("有連線")
         })
         .catch(error => {
             console.error(error);
@@ -61,7 +52,7 @@ function handleData(data){
 
     nextPage = data.nextPage;
     data = data.data;
-    
+
     const gridContainer = document.getElementById("gridContainer");
 
     let mainDiv = document.createElement("div");
@@ -108,14 +99,12 @@ function handleData(data){
 
 }
 
-
 // 看見底部加載資料
 let isClickable = true;
 const targetElement = document.getElementById("footer");
 const observer = new IntersectionObserver(entries => {
     const targetEntry = entries[0];
     if (targetEntry.isIntersecting) {
-        console.log("底部區域")
 
         // 防止連續呼叫
         if (isClickable) {
@@ -125,12 +114,10 @@ const observer = new IntersectionObserver(entries => {
 
             if(search_value !== null && nextPage !== null){
                 url+="keyword="+search_value+"&page="+nextPage;
-                console.log(url); // 待刪除
                 getData(url);
             }
             else if(nextPage !== null) {
                 url+="page="+nextPage;
-                console.log(url); // 待刪除
                 getData(url);
             }
         }       
@@ -151,7 +138,6 @@ search_button.addEventListener("click", function(){
 // 關鍵字搜尋加載資料
 function searchData (search_value) {
     url="/api/attractions?page=0&keyword="+search_value
-    console.log(url)
 
     const mains = document.querySelectorAll(".main");
     mains.forEach(main => {
@@ -203,7 +189,6 @@ function handleMRT(data){
 list_container.addEventListener("click", function(event) {
     if (event.target.tagName === "LI") {
         search_value = event.target.innerText;
-        console.log(search_value);
         searchData(search_value)
     }
 });
