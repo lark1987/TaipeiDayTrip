@@ -72,6 +72,9 @@ function handleData(data){
         let attractionDiv = document.createElement("div");
         attractionDiv.classList.add("attraction");
 
+        let img_container = document.createElement("div");
+        img_container.classList.add("img_container");
+
         // 載入景點圖片
         let PictureDiv = document.createElement("img");
         PictureDiv.setAttribute("src",item.images[0]);
@@ -81,6 +84,9 @@ function handleData(data){
         NameDiv.classList.add("attraction_name");
         let NameText = document.createTextNode(item.name); 
         NameDiv.appendChild(NameText);
+
+        img_container.appendChild(PictureDiv);
+        img_container.appendChild(NameDiv);
 
          // 載入景點資訊
         let InfoDiv = document.createElement("div");
@@ -93,8 +99,7 @@ function handleData(data){
         InfoDiv.appendChild(span2);
 
         // 全部放進 main
-        attractionDiv.appendChild(PictureDiv);
-        attractionDiv.appendChild(NameDiv);
+        attractionDiv.appendChild(img_container);
         attractionDiv.appendChild(InfoDiv);
         mainDiv.appendChild(attractionDiv);
     });
