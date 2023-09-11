@@ -18,8 +18,7 @@ db_config={
 }
 
 connection_pool=pooling.MySQLConnectionPool(**db_config)
-# db_connection=connection_pool.get_connection()
-# cursor=db_connection.cursor()
+
 
 # Pages
 @app.route("/")
@@ -146,6 +145,8 @@ def api_mrts():
 			"message": error_message
 			}
 		return jsonify(response),500
+
+
 
 
 
