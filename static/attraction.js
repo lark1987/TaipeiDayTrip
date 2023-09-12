@@ -42,68 +42,62 @@ function setCacheData(url, data) {
     sessionStorage.setItem(url, JSON.stringify(data));
 }
 
-// 創建 div 載入景點資料 (尚缺圖片處理)
+// 載入景點資料
 function handleData(data){
 
     data = data.data;
     console.log(data)
 
-    const attraction_name = document.querySelectorAll(".attraction_name");
-    attraction_name[0].textContent=data.name;
+    const attraction_name = document.querySelector(".attraction_name");
+    attraction_name.textContent=data.name;
 
-    const attraction_info = document.querySelectorAll(".attraction_info");
-    attraction_info[0].textContent=data.category+"at"+data.mrt;
+    const attraction_info = document.querySelector(".attraction_info");
+    attraction_info.textContent=data.category+"at"+data.mrt;
 
-    const attraction_description = document.querySelectorAll(".attraction_description");
-    attraction_description[0].textContent=data.description;
+    const attraction_description = document.querySelector(".attraction_description");
+    attraction_description.textContent=data.description;
 
-    const attraction_address = document.querySelectorAll(".attraction_address");
-    attraction_address[0].textContent=data.address;
+    const attraction_address = document.querySelector(".attraction_address");
+    attraction_address.textContent=data.address;
 
-    const attraction_transport = document.querySelectorAll(".attraction_transport");
-    attraction_transport[0].textContent=data.transport;
+    const attraction_transport = document.querySelector(".attraction_transport");
+    attraction_transport.textContent=data.transport;
 
-    // const attraction_name = document.querySelectorAll(".attraction_name");
+    const picture_container = document.querySelector("#picture_container");
+    picture_data=data.images
+    picture_data.forEach(function (item, index) {
+      const picDIV = document.createElement("img");
+      picDIV.classList.add("slide");
+      picDIV.src =item
+      picture_container.appendChild(picDIV);
+    })
 
+    const slides = document.querySelectorAll(".slide");
+    window.slides = slides;
+
+    console.log(slides)
+
+    showSlide(currentSlide);
+    createDots();
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-// 获取轮播图像和按钮的引用
-const slides = document.querySelectorAll(".slide");
+// 圖片輪播
 const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
 const dotContainer = document.getElementById("dot-container");
 
-let currentSlide = 0; // 当前显示的幻灯片索引
+let currentSlide = 0; 
 
-// 初始化显示第一张幻灯片
-showSlide(currentSlide);
-createDots();
-
-// 上一张按钮点击事件处理程序
 prevBtn.addEventListener("click", () => {
   currentSlide = (currentSlide - 1 + slides.length) % slides.length;
   showSlide(currentSlide);
 });
 
-// 下一张按钮点击事件处理程序
 nextBtn.addEventListener("click", () => {
   currentSlide = (currentSlide + 1) % slides.length;
   showSlide(currentSlide);
 });
 
-// 显示指定索引的幻灯片
 function showSlide(index) {
   slides.forEach((slide, i) => {
     if (i === index) {
@@ -124,18 +118,18 @@ function createDots() {
       });
       dotContainer.appendChild(dot);
     });
-  }
+}
   
-  function updateDots(index) {
-    const dots = document.querySelectorAll(".dot");
-    dots.forEach((dot, i) => {
-      if (i === index) {
-        dot.classList.add("active");
-      } else {
-        dot.classList.remove("active");
-      }
-    });
-  }
+function updateDots(index) {
+  const dots = document.querySelectorAll(".dot");
+  dots.forEach((dot, i) => {
+    if (i === index) {
+      dot.classList.add("active");
+    } else {
+      dot.classList.remove("active");
+    }
+  });
+}
   
 
 
