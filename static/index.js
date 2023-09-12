@@ -63,6 +63,13 @@ function handleData(data){
         let attractionDiv = document.createElement("div");
         attractionDiv.classList.add("attraction");
 
+        // 景點超連結
+        attractionDiv.addEventListener("click", function() {
+            const currentURL = window.location.href;
+            const targetUrl = currentURL+"attraction/"+item.id;
+            window.location.href = targetUrl;
+        });
+
         let img_container = document.createElement("div");
         img_container.classList.add("img_container");
 
@@ -93,6 +100,7 @@ function handleData(data){
         attractionDiv.appendChild(img_container);
         attractionDiv.appendChild(InfoDiv);
         mainDiv.appendChild(attractionDiv);
+
     });
     
     gridContainer.appendChild(mainDiv);
@@ -193,3 +201,17 @@ list_container.addEventListener("click", function(event) {
     }
 });
 
+// 首頁按鈕
+const header_LOGO = document.querySelector(".header_LOGO");
+header_LOGO.addEventListener("click", ()=>{
+
+const protocol = window.location.protocol; 
+const host = window.location.host;
+const homepageURL = `${protocol}//${host}`;
+
+window.location.href = homepageURL; 
+})  
+
+
+
+  

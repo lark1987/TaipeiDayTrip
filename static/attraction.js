@@ -2,6 +2,12 @@
 // 取得網址路徑的景點編號
 let id=window.location.pathname.split("/").pop();
 let url="/api/attractions/"+id
+
+let currentSlide = 0; 
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const dotContainer = document.getElementById("dot-container");
+
 getData(url)
 
 // 連線取得資料、存入緩存，或使用緩存資料
@@ -81,13 +87,7 @@ function handleData(data){
     createDots();
 }
 
-// 圖片輪播
-const prevBtn = document.getElementById("prevBtn");
-const nextBtn = document.getElementById("nextBtn");
-const dotContainer = document.getElementById("dot-container");
-
-let currentSlide = 0; 
-
+// 圖片輪播按鈕
 prevBtn.addEventListener("click", () => {
   currentSlide = (currentSlide - 1 + slides.length) % slides.length;
   showSlide(currentSlide);
@@ -109,6 +109,7 @@ function showSlide(index) {
   updateDots(index); // 更新圆点指示器
 }
 
+// 圖片輪播點點
 function createDots() {
     slides.forEach((slide, i) => {
       const dot = document.createElement("span");
@@ -132,13 +133,6 @@ function updateDots(index) {
 }
   
 
-
-
-
-
-
-
-
 // 選擇時間顯示導覽費用
 const morning = document.getElementById("morning");
 const afternoon = document.getElementById("afternoon");
@@ -152,3 +146,17 @@ function updateFee() {
         fee.textContent = "新台幣 2500 元";
     }
 }
+
+// 首頁按鈕
+const header_LOGO = document.querySelector(".header_LOGO");
+header_LOGO.addEventListener("click", ()=>{
+
+const protocol = window.location.protocol; 
+const host = window.location.host;
+const homepageURL = `${protocol}//${host}`;
+
+console.log(homepageURL);
+window.location.href = homepageURL; 
+
+
+})  
