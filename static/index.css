@@ -8,7 +8,7 @@ header{height:60px;width:100%;background-color: white;
       display:flex;justify-content:center;}
 .header_content{width:1200px;padding:10px;
       display:flex;justify-content:space-between;align-items:center;}
-.header_LOGO{color:#458899;font-size:1.5rem;}
+.header_LOGO{color:#458899;font-size:2rem;}
 
 
 footer{width:100%;height:100px;background-color: grey;color:white;

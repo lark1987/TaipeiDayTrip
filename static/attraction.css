@@ -1,17 +1,20 @@
-body{font-family:"微軟正黑體";font-size:20px;font-weight:500;
+body{font-family:"微軟正黑體";font-size:20px;
     color:rgb(120, 116, 116);margin:0;}
 
 header{height:60px;width:100%;background-color: white;
     position:fixed;left:0;top:0; z-index:100;
-    display:flex;justify-content:center;}
+    display:flex;justify-content:center;
+    font-weight:bold;
+}
 .header_content{width:1200px;padding:10px;
     display:flex;justify-content:space-between;align-items:center;}
-.header_LOGO{color:#458899;font-size:1.5rem;}
+.header_LOGO{color:#458899;font-size:2rem;}
 
 
 footer{width:100%;height:100px;background-color: grey;color:white;
     position:relative;left:0;bottom:0;
     display:flex;justify-content:center;align-items:center;
+    font-weight:bold;
 }
 
 .container{width:1200px;margin:70px auto 10px auto}
@@ -27,7 +30,6 @@ footer{width:100%;height:100px;background-color: grey;color:white;
 #Btn-container{display:flex;justify-content:space-between;margin:200px 5px auto 25px;}
 #dot-container{display:flex;justify-content:center;margin-top:140px;}
 
-/* .dot-container {text-align: center;} */
 .dot {display: inline-block;width: 10px;height: 10px;
   margin: 0 5px;background-color: #bbb;border-radius: 50%;
   cursor: pointer;
@@ -40,27 +42,57 @@ footer{width:100%;height:100px;background-color: grey;color:white;
 .attraction_name{font-size:1.5rem;font-weight:bold;}
 .attraction_info{margin-bottom:20px;}
 
-input[type="date"] { border:none; }
+input[type="date"] {border:none;}
+
+
+/* 隐藏默认的单选按钮 */
+input[type="radio"] {
+    display: none;
+  }
+  
+/* 自定义单选按钮的外观 */
+.time_button {
+position: relative;
+padding-left: 30px; /* 为了给自定义的按钮留出空间 */
+cursor: pointer;
+}
+
+/* 创建自定义按钮的外观 */
+.time_button::before {
+content: "";
+position: absolute;
+left: 0;
+top: 0;
+width: 20px;
+height: 20px;
+border: 2px solid #000; /* 自定义按钮的边框颜色 */
+border-radius: 50%; /* 创建圆形按钮 */
+background-color: blue; /* 未选中时的背景颜色 */
+}
+
+/* 当单选按钮被选中时，更改自定义按钮的颜色 */
+input[type="radio"]:checked + .time_button::before {
+background-color:red; /* 选中时的背景颜色 */
+border-color: red; /* 选中时的边框颜色 */
+}
+
+  
+
 .book_button{
     font-family:"微軟正黑體";font-size:20px;color: white;
     border:none;border-radius: 5px;padding:10px 25px;margin:10px;
-    background-color:#458899;}
+    background-color:#458899;font-weight:bold;}
 
 hr {border-color:white;}
 
 @media screen and (max-width:1200px){
-    .container_content{width:100%;}
-    .main{max-width:60%;
-          display:grid;
-          grid-template-areas:
-          "t t"
-          "t t"
-          "t t"
-          "t t"
-          "t t"
-          "t t";
-          grid-template-columns:1fr 1fr;
-    }
+    .container{width:90%;}
+    .attraction_box{display:flex;flex-flow:column wrap;}
+    .attraction_picture{width: 95%;}
+    .attraction_content{width: 98%;}
+    .attraction_description{padding:10px;}
+
+
 } 
 
 @media screen and (max-width:600px){

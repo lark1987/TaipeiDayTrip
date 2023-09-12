@@ -58,7 +58,7 @@ function handleData(data){
     attraction_name.textContent=data.name;
 
     const attraction_info = document.querySelector(".attraction_info");
-    attraction_info.textContent=data.category+"at"+data.mrt;
+    attraction_info.textContent=data.category+"　at　"+data.mrt;
 
     const attraction_description = document.querySelector(".attraction_description");
     attraction_description.textContent=data.description;
