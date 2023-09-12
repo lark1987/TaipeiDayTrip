@@ -17,6 +17,7 @@ footer{width:100%;height:100px;background-color: grey;color:white;
 .container{width:1200px;margin:70px auto 10px auto}
 
 .attraction_box{display:flex;justify-content:space-between;margin:0 auto;}
+.attraction_box div{margin:10px;}
 .attraction_content {width:600px;line-height: 40px;}
 .attraction_book{border-radius: 5px;padding:20px;background-color: rgb(231, 230, 230);}
 .attraction_name{font-size:1.5rem;font-weight:bold;}
@@ -30,4 +31,34 @@ input[type="date"] { border:none; }
 
 hr {border-color:white;}
 
+#slideshow-container {
+    position: relative;
+    max-width: 600px; /* 设置轮播容器的最大宽度 */
+    margin: 0 auto; /* 水平居中 */
+  }
+  
+  .slide {
+    display: none; /* 隐藏所有图像 */
+    width: 100%; /* 使图像充满容器 */
+  }
+  
 
+
+  .dot-container {
+    text-align: center;
+  }
+  
+  .dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    background-color: #bbb;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .dot.active {
+    background-color: #333;
+  }
+  

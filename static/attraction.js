@@ -63,12 +63,80 @@ function handleData(data){
     const attraction_transport = document.querySelectorAll(".attraction_transport");
     attraction_transport[0].textContent=data.transport;
 
+    // const attraction_name = document.querySelectorAll(".attraction_name");
+
 }
 
 
 
 
 
+
+
+
+
+
+
+
+
+// 获取轮播图像和按钮的引用
+const slides = document.querySelectorAll(".slide");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const dotContainer = document.getElementById("dot-container");
+
+let currentSlide = 0; // 当前显示的幻灯片索引
+
+// 初始化显示第一张幻灯片
+showSlide(currentSlide);
+createDots();
+
+// 上一张按钮点击事件处理程序
+prevBtn.addEventListener("click", () => {
+  currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+  showSlide(currentSlide);
+});
+
+// 下一张按钮点击事件处理程序
+nextBtn.addEventListener("click", () => {
+  currentSlide = (currentSlide + 1) % slides.length;
+  showSlide(currentSlide);
+});
+
+// 显示指定索引的幻灯片
+function showSlide(index) {
+  slides.forEach((slide, i) => {
+    if (i === index) {
+      slide.style.display = "block";
+    } else {
+      slide.style.display = "none";
+    }
+  });
+  updateDots(index); // 更新圆点指示器
+}
+
+function createDots() {
+    slides.forEach((slide, i) => {
+      const dot = document.createElement("span");
+      dot.classList.add("dot");
+      dot.addEventListener("click", () => {
+        showSlide(i); // 点击圆点时显示对应的幻灯片
+      });
+      dotContainer.appendChild(dot);
+    });
+  }
+  
+  function updateDots(index) {
+    const dots = document.querySelectorAll(".dot");
+    dots.forEach((dot, i) => {
+      if (i === index) {
+        dot.classList.add("active");
+      } else {
+        dot.classList.remove("active");
+      }
+    });
+  }
+  
 
 
 
