@@ -6,7 +6,7 @@ let url="/api/attractions/"+id
 let currentSlide = 0; 
 const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
-const dotContainer = document.getElementById("dot-container");
+const dotContainer = document.getElementById("dot_container");
 
 getData(url)
 
@@ -15,7 +15,6 @@ function getData(url) {
     const cachedData = getCacheData(url);
     if (cachedData) {
         handleData(cachedData)
-        console.log("沒有連線")
         return;
     }
     else{fetch(url, {
@@ -27,7 +26,6 @@ function getData(url) {
         .then(data => {
             setCacheData(url, data); 
             handleData(data)
-            console.log("有連線")
         })
         .catch(error => {
             console.error(error);
@@ -51,25 +49,24 @@ function setCacheData(url, data) {
 // 載入景點資料
 function handleData(data){
 
-    data = data.data;
-    console.log(data)
+    data=data.data;
 
-    const attraction_name = document.querySelector(".attraction_name");
+    const attraction_name=document.querySelector(".attraction_name");
     attraction_name.textContent=data.name;
 
-    const attraction_info = document.querySelector(".attraction_info");
+    const attraction_info=document.querySelector(".attraction_info");
     attraction_info.textContent=data.category+"　at　"+data.mrt;
 
-    const attraction_description = document.querySelector(".attraction_description");
+    const attraction_description=document.querySelector(".attraction_description");
     attraction_description.textContent=data.description;
 
-    const attraction_address = document.querySelector(".attraction_address");
+    const attraction_address=document.querySelector(".attraction_address");
     attraction_address.textContent=data.address;
 
-    const attraction_transport = document.querySelector(".attraction_transport");
+    const attraction_transport=document.querySelector(".attraction_transport");
     attraction_transport.textContent=data.transport;
 
-    const picture_container = document.querySelector("#picture_container");
+    const picture_container=document.querySelector("#picture_container");
     picture_data=data.images
     picture_data.forEach(function (item, index) {
       const picDIV = document.createElement("img");
@@ -81,13 +78,22 @@ function handleData(data){
     const slides = document.querySelectorAll(".slide");
     window.slides = slides;
 
-    console.log(slides)
-
     showSlide(currentSlide);
     createDots();
 }
 
-// 圖片輪播按鈕
+// 圖片輪播
+function showSlide(index) {
+  slides.forEach((slide, i) => {
+    if (i === index) {
+      slide.style.display = "block";
+    } else {
+      slide.style.display = "none";
+    }
+  });
+  updateDots(index); 
+}
+
 prevBtn.addEventListener("click", () => {
   currentSlide = (currentSlide - 1 + slides.length) % slides.length;
   showSlide(currentSlide);
@@ -98,16 +104,6 @@ nextBtn.addEventListener("click", () => {
   showSlide(currentSlide);
 });
 
-function showSlide(index) {
-  slides.forEach((slide, i) => {
-    if (i === index) {
-      slide.style.display = "block";
-    } else {
-      slide.style.display = "none";
-    }
-  });
-  updateDots(index); // 更新圆点指示器
-}
 
 // 圖片輪播點點
 function createDots() {
@@ -115,7 +111,7 @@ function createDots() {
       const dot = document.createElement("span");
       dot.classList.add("dot");
       dot.addEventListener("click", () => {
-        showSlide(i); // 点击圆点时显示对应的幻灯片
+        showSlide(i); 
       });
       dotContainer.appendChild(dot);
     });
@@ -155,23 +151,7 @@ const protocol = window.location.protocol;
 const host = window.location.host;
 const homepageURL = `${protocol}//${host}`;
 
-console.log(homepageURL);
 window.location.href = homepageURL; 
 
 
 })  
-
-
-// 日期樣式
-// const date = document.querySelector("#date");
-// date.addEventListener("click", ()=>{
-//   let dateInput = document.getElementById("date");
-//   let newDate = new Date("2023-12-31"); 
-//   let formattedDate = newDate.toISOString().slice(0, 10);
-//   dateInput.value = formattedDate;
-// })
-
-// document.getElementById('date').addEventListener('change', function() {
-//   const selectedDate = this.value;
-//   this.setAttribute('data-date', selectedDate);
-// });
