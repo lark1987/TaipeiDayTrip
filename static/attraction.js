@@ -160,3 +160,18 @@ window.location.href = homepageURL;
 
 
 })  
+
+
+// 日期樣式
+// const date = document.querySelector("#date");
+// date.addEventListener("click", ()=>{
+//   let dateInput = document.getElementById("date");
+//   let newDate = new Date("2023-12-31"); 
+//   let formattedDate = newDate.toISOString().slice(0, 10);
+//   dateInput.value = formattedDate;
+// })
+
+// document.getElementById('date').addEventListener('change', function() {
+//   const selectedDate = this.value;
+//   this.setAttribute('data-date', selectedDate);
+// });
