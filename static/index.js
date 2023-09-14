@@ -164,14 +164,14 @@ const list_container = document.querySelector(".list_container");
 
 scrollLeftButton.addEventListener("click", () => {
     list_container.scrollBy({
-    left: -1000, 
+    left: -200, 
     behavior: "smooth", 
   });
 });
 
 scrollRightButton.addEventListener("click", () => {
     list_container.scrollBy({
-    left: 1000, 
+    left: 200, 
     behavior: "smooth", 
   });
 });

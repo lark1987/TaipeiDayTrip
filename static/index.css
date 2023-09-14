@@ -1,17 +1,17 @@
 
-body{font-family:"微軟正黑體";font-size:15px;font-weight:bold;
-      color:rgb(120, 116, 116);
+body{font-family:"微軟正黑體";font-size:16px;font-weight:bold;
+      color:#666666;
       margin:0;}
 
-header{height:60px;width:100%;background-color: white;
+header{height:54px;width:100%;background-color: #FFFFFF;
       position:fixed;left:0;top:0; z-index:100;
       display:flex;justify-content:center;}
 .header_content{width:1200px;padding:10px;
       display:flex;justify-content:space-between;align-items:center;}
-.header_LOGO{color:#458899;font-size:1.5rem;}
+.header_LOGO{color:#448899;font-size:30px;}
 
 
-footer{width:100%;height:100px;background-color: grey;color:white;
+footer{width:100%;height:100px;background-color: #757575;color:white;
       position:relative;left:0;bottom:0;
       display:flex;justify-content:center;align-items:center;
 }
@@ -22,15 +22,16 @@ footer{width:100%;height:100px;background-color: grey;color:white;
 .banner{background-image:url("./image/image_101.png");background-size:cover;
         width:100%;height:300px;
         position:absolute;left:0;z-index:-1;}
-.banner_content{color:white;font-weight:bold;
+.banner_content{color:#F8F8F8;font-weight:bold;
                 position:relative;top: 100px;}
-.banner_bigtext{font-size:1.5rem;margin-bottom:10px;}
+.banner_bigtext{font-size:28px;margin-bottom:10px;}
 
 .search_container{display:flex; margin-top:20px;}
-#search_input{font-weight:bold; border:none; padding: 10px 10px;}
+#search_input{width:400px;height:26px;font-weight:bold; border:none; padding: 10px 10px;}
+#search_button{width:60px;height:46px;}
 
 .scroll_container {display:flex;margin-top:200px;width:100%;height:20px;}
-.list_container {overflow-x: hidden;white-space: nowrap;display:flex; }
+.list_container {overflow: hidden;white-space: nowrap;display:flex; }
 .list_container li {list-style: none;margin:0 10px;}
 
 .main{margin:20px auto;
@@ -51,7 +52,7 @@ footer{width:100%;height:100px;background-color: grey;color:white;
       position: absolute;bottom:0;left: 0;right: 0;;z-index: 1;
       display:flex;align-items:center;
       line-height:50px;padding-left:10px;
-      color: white;font-weight:bold;background-color: rgba(34, 33, 33, 0.683);
+      color: #FFFFFF;font-weight:bold;background-color: rgba(34, 33, 33, 0.683);
  }
 .attraction_info{
       line-height:50px;
@@ -75,7 +76,6 @@ footer{width:100%;height:100px;background-color: grey;color:white;
 } 
 
 @media screen and (max-width:600px){
-      body{font-size:15px;}
       #gridContainer{display:flex;justify-content:center; flex-flow:column wrap;}
       .main{display:flex;justify-content:center; flex-flow:column wrap;max-width:100%;}
       .attraction{width:100%;}

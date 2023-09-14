@@ -1,17 +1,17 @@
-body{font-family:"微軟正黑體";font-size:15px;
-    color:rgb(120, 116, 116);margin:0;}
+body{font-family:"微軟正黑體";font-size:16px;
+    color:#666666;margin:0;}
 
-header{height:60px;width:100%;background-color: white;
+header{height:54px;width:100%;background-color: #FFFFFF;
     position:fixed;left:0;top:0; z-index:100;
     display:flex;justify-content:center;
-    font-weight:bold;border-bottom: 1px solid rgb(228, 228, 228)
+    font-weight:bold;border-bottom: 1px solid #E8E8E8;
 }
 .header_content{width:1200px;padding:10px;
     display:flex;justify-content:space-between;align-items:center;}
-.header_LOGO{color:#458899;font-size:1.5rem;}
+.header_LOGO{color:#448899;font-size:30px;}
 
 
-footer{width:100%;height:100px;background-color: grey;color:white;
+footer{width:100%;height:100px;background-color: #757575;color:white;
     position:relative;left:0;bottom:0;
     display:flex;justify-content:center;align-items:center;
     font-weight:bold;
@@ -32,18 +32,19 @@ footer{width:100%;height:100px;background-color: grey;color:white;
 #dot_container{display:flex;justify-content:center;margin-top:140px;}
 
 .dot {display: inline-block;width: 10px;height: 10px;
-  margin: 0 5px;background-color: #bbb;border-radius: 50%;
+  margin: 0 5px;background-color:#FFFFFF;border-radius: 50%;
   cursor: pointer;
 }
-.dot.active {background-color: #333;}
+.dot.active {background-color:#000000;}
 .slide {display: none; width: 100%;}
 
 
 
 
 .attraction_content {width:600px;line-height: 40px;}
-.attraction_book{border-radius: 5px;padding:20px;background-color: rgb(231, 230, 230);}
-.attraction_name{font-size:1.5rem;font-weight:bold;}
+.attraction_book{border-radius: 5px;padding:20px;background-color:#E8E8E8;
+}
+.attraction_name{font-size:24px;font-weight:bold;}
 .attraction_info{margin-bottom:10px;}
 
 input[type="date"]{border:none; padding:7px;width:180px;}
@@ -56,15 +57,19 @@ input[type="radio"]{display:none;}
     border: 3px solid white;background-color:white;}
 
 input[type="radio"]:checked + .time_button::before {
-    background-color:#458899; 
+    background-color:#448899; 
 }
 
 .book_button{
     font-family:"微軟正黑體";font-size:20px;color: white;
     border:none;border-radius: 5px;padding:10px 25px;margin:10px;
-    background-color:#458899;font-weight:bold;}
+    background-color:#448899;font-weight:bold;}
 
-hr {border: 1px solid rgb(228, 228, 228)}
+hr {border-width: 0px 0px 1px 0px;
+    border-color: #E8E8E8;
+    border-style: solid;}
+  
+
 
 
 @media screen and (max-width:1200px){
