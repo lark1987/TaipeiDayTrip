@@ -75,7 +75,7 @@ hr {border-width: 0px 0px 1px 0px;
 @media screen and (max-width:1200px){
     .container{width:90%;}
     .attraction_box{display:flex;justify-content:center;flex-flow:column wrap;}
-    .attraction_picture{position: absolute;top: 60px;left: 0;width: 100%;}
+    .attraction_picture{position: absolute;top: 54px;left: 0;width: 100%;}
     .attraction_content{margin: 400px auto 0 auto;}
     #picture_container img {border-radius:0}
 } 
