@@ -1,0 +1,66 @@
+.container{width:1200px;margin:70px auto 10px auto}
+
+.attraction_box{display:flex;justify-content:space-between;}
+
+.attraction_picture{position:relative;width:580px;}
+#picture_container {position:absolute;width:100%;z-index:-1;}
+#picture_container img {width:100%;height:400px;object-fit:cover;border-radius:5px}
+
+#Btn-container{display:flex;justify-content:space-between;margin:200px 5px auto 5px;}
+#dot_container{display:flex;justify-content:center;margin-top:140px;}
+
+.dot {display: inline-block;width:10px;height:10px;
+  margin: 0 5px;background-color:#FFFFFF;border-radius: 50%;
+  cursor: pointer;}
+.dot.active {background-color:#000000;}
+.slide {display: none; width: 100%;}
+
+.attraction_content {width:600px;line-height: 40px;}
+.attraction_book{border-radius: 5px;padding:20px;background-color:#E8E8E8;}
+.attraction_name{font-size:24px;font-weight:bold;}
+.attraction_info{margin-bottom:10px;}
+
+input[type="date"]{border:none; padding:7px;width:190px;}
+input[type="radio"]{display:none;}
+
+.time_button {position:relative;padding-left:30px;cursor:pointer;}
+.time_button::before{
+    content: "";border-radius: 50%; 
+    position: absolute;left:0;top:0;width:20px;height: 20px;
+    border: 3px solid white;background-color:white;}
+
+input[type="radio"]:checked + .time_button::before {
+    background-color:#448899; 
+}
+
+.book_button{
+    font-size:19px;color: white;
+    border:none;border-radius: 5px;padding:10px 20px;margin:10px;
+    background-color:#448899;}
+
+hr {border-width: 0px 0px 1px 0px;
+    border-color: #E8E8E8;
+    border-style: solid;}
+
+
+@media screen and (max-width:1200px){
+    .container{width:90%;}
+    .attraction_box{display:flex;justify-content:center;flex-flow:column wrap;}
+    .attraction_picture{position: absolute;top: 54px;left: 0;width: 100%;}
+    .attraction_content{margin: 400px auto 0 auto;}
+    #picture_container img {border-radius:0}
+} 
+
+@media screen and (max-width:600px){
+    .attraction_content {width:100%;}
+    .attraction_content {width:100%;}
+}
+
+
+
+
+
+
+
+
+  
