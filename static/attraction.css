@@ -15,7 +15,7 @@
 .dot.active {background-color:#000000;}
 .slide {display: none; width: 100%;}
 
-.attraction_content {width:600px;height:400px;line-height: 40px;}
+.attraction_content {width:600px;line-height: 40px;}
 .attraction_book{border-radius: 5px;padding:20px;background-color:#E8E8E8;}
 .attraction_name{font-size:24px;font-weight:bold;}
 .attraction_info{margin-bottom:10px;}
