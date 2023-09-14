@@ -1,20 +1,4 @@
-
-body{font-family:"微軟正黑體";font-size:16px;font-weight:bold;
-      color:#666666;
-      margin:0;}
-
-header{height:54px;width:100%;background-color: #FFFFFF;
-      position:fixed;left:0;top:0; z-index:100;
-      display:flex;justify-content:center;}
-.header_content{width:1200px;padding:10px;
-      display:flex;justify-content:space-between;align-items:center;}
-.header_LOGO{color:#448899;font-size:30px;}
-
-
-footer{width:100%;height:100px;background-color: #757575;color:white;
-      position:relative;left:0;bottom:0;
-      display:flex;justify-content:center;align-items:center;
-}
+body{font-weight:bold;}
 
 .container{display:flex;justify-content:center;padding: 20px;}
 .container_content{width:1200px;}
