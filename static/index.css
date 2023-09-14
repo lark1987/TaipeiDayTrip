@@ -1,5 +1,5 @@
 
-body{font-family:"微軟正黑體";font-size:20px;font-weight:bold;
+body{font-family:"微軟正黑體";font-size:15px;font-weight:bold;
       color:rgb(120, 116, 116);
       margin:0;}
 
@@ -8,7 +8,7 @@ header{height:60px;width:100%;background-color: white;
       display:flex;justify-content:center;}
 .header_content{width:1200px;padding:10px;
       display:flex;justify-content:space-between;align-items:center;}
-.header_LOGO{color:#458899;font-size:2rem;}
+.header_LOGO{color:#458899;font-size:1.5rem;}
 
 
 footer{width:100%;height:100px;background-color: grey;color:white;
@@ -29,7 +29,7 @@ footer{width:100%;height:100px;background-color: grey;color:white;
 .search_container{display:flex; margin-top:20px;}
 #search_input{font-weight:bold; border:none; padding: 10px 10px;}
 
-.scroll_container {display:flex;margin-top:200px ;width: 100%;}
+.scroll_container {display:flex;margin-top:200px;width:100%;height:20px;}
 .list_container {overflow-x: hidden;white-space: nowrap;display:flex; }
 .list_container li {list-style: none;margin:0 10px;}
 
