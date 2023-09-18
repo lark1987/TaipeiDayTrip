@@ -216,7 +216,6 @@ window.location.href = homepageURL;
 
 
 //會員註冊
-
 const signUpButton = document.getElementById("signUp_Button");
 signUpButton.addEventListener("click", () => {
 
@@ -245,6 +244,7 @@ signUpButton.addEventListener("click", () => {
 
 });
 
+//會員登入，存入token
 const signInButton = document.getElementById("signIn_Button");
 signInButton.addEventListener("click", () => {
 
@@ -261,7 +261,36 @@ signInButton.addEventListener("click", () => {
             "password": signInPassword
             })
     })
-    // .then(response => response.json())
+    .then(response => response.json())
+    .then(data => {
+        let token = data.token;
+        localStorage.setItem("token", token);
+        // console.log(data); 
+        // console.log(token); 
+
+      })
+    .catch(error => {
+    console.log(error);
+    });
+
+});
+
+//會員資訊，提供token
+const testA = document.getElementById("testA");
+testA.addEventListener("click", () => {
+
+    let token = localStorage.getItem("token");
+    console.log(token);
+
+    const signInUrl = "/api/user/auth";
+    fetch(signInUrl, {
+        method: "GET", 
+        headers: {
+            "Content-Type":"application/json",
+            "Authorization":token
+        }
+    })
+    .then(response => response.json())
     .then(data => {
         console.log(data); 
       })
@@ -271,27 +300,8 @@ signInButton.addEventListener("click", () => {
 
 });
 
-const test = document.getElementById("test");
-test.addEventListener("click", () => {
-
-    console.log("測試按鈕")
-
-    const signInUrl = "/api/user/auth";
-
-    fetch(signInUrl, {
-        method: "GET", 
-        // headers: {"Content-Type": "application/json"},
-        // body: JSON.stringify({
-        //     "email": signInMail,
-        //     "password": signInPassword
-        //     })
-    })
-    // .then(response => response.json())
-    .then(data => {
-        console.log(data); 
-      })
-    .catch(error => {
-    console.log(error);
-    });
-
+//登出帳號
+const testB = document.getElementById("testB");
+testB.addEventListener("click", () => {
+    localStorage.removeItem("token");
 });

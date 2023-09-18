@@ -188,7 +188,6 @@ def signup():
 			}
 		return jsonify(response),500
 
-
 # 登入功能
 @app.route("/api/user/auth",methods=["PUT"])
 def signin():
@@ -235,23 +234,25 @@ def signin():
 # 會員資訊
 @app.route("/api/user/auth")
 def signin_data():
+	try:
+		token = request.headers.get("Authorization")
+		decoded_token = jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
+		token_id = decoded_token.get("id") 
+		token_name = decoded_token.get("name") 
+		token_email = decoded_token.get("email") 
 
-	# try:
-	# 	decoded_token = jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
-	# 	payload_data = decoded_token.get("id") 
-	# 	print(payload_data)
-	# except jwt.ExpiredSignatureError:
-	# 	print("Token has expired.")
-	# except jwt.InvalidTokenError:
-	# 	print("Invalid token.")
-
-	response = {"data":{
-		# "id":db_id,
-		# "name":db_name,
-		# "email":db_email
+		response = {"data":{
+			"id":token_id,
+			"name":token_name,
+			"email":token_email
+			}
 		}
-	}
-	return jsonify(response)
+		return jsonify(response)
+
+	except jwt.ExpiredSignatureError:
+		return("Token has expired.")
+	except jwt.InvalidTokenError:
+		return("Invalid token.")
 
 
 
