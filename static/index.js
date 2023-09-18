@@ -214,4 +214,84 @@ window.location.href = homepageURL;
 
 
 
-  
+
+//會員註冊
+
+const signUpButton = document.getElementById("signUp_Button");
+signUpButton.addEventListener("click", () => {
+
+    const signUpName = document.getElementById("signUp_Name").value;
+    const signUpMail = document.getElementById("signUp_Mail").value;;
+    const signUpPassword = document.getElementById("signUp_Password").value;;
+
+    const signUpUrl = "/api/user";
+
+    fetch(signUpUrl, {
+        method: "POST", 
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            "name": signUpName,  
+            "email": signUpMail,
+            "password": signUpPassword
+            })
+    })
+    // .then(response => response.json())
+    .then(data => {
+        console.log(data); 
+      })
+    .catch(error => {
+    console.log(error);
+    });
+
+});
+
+const signInButton = document.getElementById("signIn_Button");
+signInButton.addEventListener("click", () => {
+
+    const signInMail = document.getElementById("signIn_Mail").value;;
+    const signInPassword = document.getElementById("signIn_Password").value;;
+
+    const signInUrl = "/api/user/auth";
+
+    fetch(signInUrl, {
+        method: "PUT", 
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            "email": signInMail,
+            "password": signInPassword
+            })
+    })
+    // .then(response => response.json())
+    .then(data => {
+        console.log(data); 
+      })
+    .catch(error => {
+    console.log(error);
+    });
+
+});
+
+const test = document.getElementById("test");
+test.addEventListener("click", () => {
+
+    console.log("測試按鈕")
+
+    const signInUrl = "/api/user/auth";
+
+    fetch(signInUrl, {
+        method: "GET", 
+        // headers: {"Content-Type": "application/json"},
+        // body: JSON.stringify({
+        //     "email": signInMail,
+        //     "password": signInPassword
+        //     })
+    })
+    // .then(response => response.json())
+    .then(data => {
+        console.log(data); 
+      })
+    .catch(error => {
+    console.log(error);
+    });
+
+});

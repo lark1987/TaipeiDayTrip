@@ -152,6 +152,4 @@ const host = window.location.host;
 const homepageURL = `${protocol}//${host}`;
 
 window.location.href = homepageURL; 
-
-
 })  

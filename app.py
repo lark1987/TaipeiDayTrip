@@ -1,12 +1,16 @@
+from flask import *
 import mysql.connector
 from mysql.connector import pooling
 import json
 import re
+import jwt
+from werkzeug.security import check_password_hash
 
-from flask import *
+
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
+app.config["SECRET_KEY"] = "12345678"
 
 # MySQL資料庫連線
 db_config={
@@ -145,6 +149,118 @@ def api_mrts():
 			"message": error_message
 			}
 		return jsonify(response),500
+
+# 註冊功能
+@app.route("/api/user",methods=["POST"])
+def signup():
+	try:
+		data = request.json
+		name=data["name"] 
+		email=data["email"] 
+		password=data["password"]
+
+		db_connection=connection_pool.get_connection()
+		cursor=db_connection.cursor()
+
+		cursor.execute("SELECT email FROM members;")
+		email_list = [email[0] for email in cursor.fetchall()]
+		if email in email_list:
+			response={
+				"error": True,
+				"message":"註冊失敗，重複的 Email"
+				}
+			return jsonify(response),400
+		
+		cursor.execute("INSERT INTO members (name, email, password) VALUES (%s, %s, %s)",
+					(name, email, password))
+		db_connection.commit() 
+		cursor.close()
+		db_connection.close()
+
+		response = {"ok": True}
+		return jsonify(response)
+
+	except Exception as e :  
+		error_message=str(e)
+		response={
+			"error":True,
+			"message": error_message
+			}
+		return jsonify(response),500
+
+
+# 登入功能
+@app.route("/api/user/auth",methods=["PUT"])
+def signin():
+	try:
+		data = request.json
+		email=data["email"] 
+		password=data["password"]
+
+		db_connection=connection_pool.get_connection()
+		cursor=db_connection.cursor()
+
+		cursor.execute("SELECT * FROM members WHERE email = %s", (email,))
+		db_id,db_name,db_email,db_password = cursor.fetchone()
+		cursor.close()
+		db_connection.close()
+
+		if db_id is not None and email == db_email and password == db_password:
+			token_data = {
+				"id":db_id,
+				"name":db_name,
+				"email":db_email,
+			}
+			token = jwt.encode(token_data, app.config["SECRET_KEY"], algorithm="HS256")
+
+			response = {
+				"token": token
+			}
+			return jsonify(response)
+		else:
+			response = {
+				"error": True,
+				"message": "登入失敗，帳號或密碼輸入錯誤"
+				}
+			return jsonify(response),400
+		
+	except Exception as e :  
+		error_message=str(e)
+		response={
+			"error":True,
+			"message": error_message
+			}
+		return jsonify(response),500
+
+# 會員資訊
+@app.route("/api/user/auth")
+def signin_data():
+
+	# try:
+	# 	decoded_token = jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
+	# 	payload_data = decoded_token.get("id") 
+	# 	print(payload_data)
+	# except jwt.ExpiredSignatureError:
+	# 	print("Token has expired.")
+	# except jwt.InvalidTokenError:
+	# 	print("Invalid token.")
+
+	response = {"data":{
+		# "id":db_id,
+		# "name":db_name,
+		# "email":db_email
+		}
+	}
+	return jsonify(response)
+
+
+
+
+
+
+
+
+
 
 
 
