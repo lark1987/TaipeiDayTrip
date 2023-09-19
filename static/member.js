@@ -54,9 +54,7 @@ signInButton.addEventListener("click", () => {
     .then(data => {
         let token = data.token;
         localStorage.setItem("token", token);
-        // console.log(data); 
-        // console.log(token); 
-
+        location.reload();
       })
     .catch(error => {
     console.log(error);
@@ -64,11 +62,10 @@ signInButton.addEventListener("click", () => {
 
 });
 
-//提供token，得到會員資訊
+//提供token，得到會員資訊，確認會員狀態
+const loginButton = document.querySelector(".loginButton");
 function tokenCheck(){
     let token = localStorage.getItem("token");
-    console.log(token);
-
     if(token){
         const signInUrl = "/api/user/auth";
         fetch(signInUrl, {
@@ -81,10 +78,7 @@ function tokenCheck(){
         .then(response => response.json())
         .then(data => {
             console.log(data); 
-            const loginCheck=document.querySelector(".loginCheck");
-            loginCheck.textContent="登出帳號";
-
-
+            logoutButtonSet()
           })
         .catch(error => {
         console.log(error);
@@ -92,20 +86,48 @@ function tokenCheck(){
     }
     else{
         console.log("token不存在");
-        const loginCheck=document.querySelector(".loginCheck");
-        loginCheck.textContent="登入/註冊";
+        loginButtonSet()
     }
-
 }
 
-//登入登出按鈕🚩🚩🚩
-const testB = document.getElementById("testB");
-testB.addEventListener("click", () => {
-    localStorage.removeItem("token");
-});
+//登出按鈕
+function logoutButtonSet(){
+    loginButton.textContent="登出帳戶";
+    loginButton.addEventListener("click", () => {
+        localStorage.removeItem("token");
+        location.reload();
+    })
+}
+//登入按鈕
+function loginButtonSet(){
+    loginButton.textContent="登入/註冊";
+    loginButton.addEventListener("click", () => {
+        document.querySelector(".signIn_container").classList.remove("hide");
+        document.querySelector(".signUp_container").classList.add("hide");
+        document.querySelector(".overlay").classList.remove("hide");
+    })
+}
+//登入頁面的註冊按鈕
+const signIn_signUp_button = document.querySelector(".signIn_signUp");
+signIn_signUp_button.addEventListener("click", () => {
+    document.querySelector(".signIn_container").classList.add("hide");
+    document.querySelector(".signUp_container").classList.remove("hide");
+    document.querySelector(".overlay").classList.remove("hide");
+})
+//註冊頁面的登入按鈕
+const signUp_signIn_button = document.querySelector(".signUp_signIn");
+signUp_signIn_button.addEventListener("click", () => {
+    document.querySelector(".signIn_container").classList.remove("hide");
+    document.querySelector(".signUp_container").classList.add("hide");
+    document.querySelector(".overlay").classList.remove("hide");
+})
 
-//測試按鈕
-const testA = document.getElementById("testA");
-testA.addEventListener("click", () => {
-console.log("測試")
+//關閉按鈕 🚩
+const closePopupButtons = document.querySelectorAll(".close");
+closePopupButtons.forEach(button => {
+    button.addEventListener("click", () => {
+    document.querySelector(".overlay").classList.add("hide");
+    document.querySelector(".signIn_container").classList.add("hide");
+    document.querySelector(".signUp_container").classList.add("hide");
+  });
 });
