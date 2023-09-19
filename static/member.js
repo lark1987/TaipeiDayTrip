@@ -50,17 +50,16 @@ signInButton.addEventListener("click", () => {
             "password": signInPassword
             })
     })
-    // .then(response => response.json())
+    .then(response => response.json())
     .then(data => {
         if (data.token) {
             let token = data.token;
             localStorage.setItem("token", token);
-            // location.reload();
+            console.log(data.token)
+            location.reload();
         }
         else if(data.error){
-            // let message=data.message
-            // console.log(message)
-            console.log(data)
+            console.log(data.message)
         }
       })
     .catch(error => {

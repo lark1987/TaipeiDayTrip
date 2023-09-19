@@ -200,21 +200,23 @@ def signin():
 		cursor=db_connection.cursor()
 
 		cursor.execute("SELECT * FROM members WHERE email = %s", (email,))
-		db_id,db_name,db_email,db_password = cursor.fetchone()
+		result=cursor.fetchone()
+		
+		if result is not None:
+			db_id,db_name,db_email,db_password = result
+			
+			if email == db_email and password == db_password:
+				token_data = {
+					"id":db_id,
+					"name":db_name,
+					"email":db_email,
+				}
+				token = jwt.encode(token_data, app.config["SECRET_KEY"], algorithm="HS256")
 
-
-		if db_id is not None and email == db_email and password == db_password:
-			token_data = {
-				"id":db_id,
-				"name":db_name,
-				"email":db_email,
-			}
-			token = jwt.encode(token_data, app.config["SECRET_KEY"], algorithm="HS256")
-
-			response = {
-				"token": token
-			}
-			return jsonify(response)
+				response = {
+					"token": token
+				}
+				return jsonify(response)
 		else:
 			response = {
 				"error": True,
@@ -255,16 +257,6 @@ def signin_data():
 		return("Token has expired.")
 	except jwt.InvalidTokenError:
 		return("Invalid token.")
-
-
-
-
-
-
-
-
-
-
 
 
 
