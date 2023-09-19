@@ -2,6 +2,11 @@
 let nextPage = 0;
 let search_value = "";
 
+window.addEventListener("load", () => {
+    url="/api/mrts"
+    getData(url);
+})
+
 // 獲取緩存資料
 function getCacheData(url) {
     const cachedData=sessionStorage.getItem(url);
@@ -155,7 +160,6 @@ function searchData (search_value) {
     getData(url);
 }
 
-
 // 捷運站列表水平滾動
 const scrollContainer = document.querySelector(".scroll_container");
 const scrollLeftButton = document.querySelector("#scroll_left");
@@ -175,12 +179,6 @@ scrollRightButton.addEventListener("click", () => {
     behavior: "smooth", 
   });
 });
-
-window.addEventListener("load", () => {
-        url="/api/mrts"
-        getData(url);
-})
-
 
 // 創建 div 載入捷運列表
 function handleMRT(data){
@@ -212,96 +210,3 @@ const homepageURL = `${protocol}//${host}`;
 window.location.href = homepageURL; 
 })  
 
-
-
-
-//會員註冊
-const signUpButton = document.getElementById("signUp_Button");
-signUpButton.addEventListener("click", () => {
-
-    const signUpName = document.getElementById("signUp_Name").value;
-    const signUpMail = document.getElementById("signUp_Mail").value;;
-    const signUpPassword = document.getElementById("signUp_Password").value;;
-
-    const signUpUrl = "/api/user";
-
-    fetch(signUpUrl, {
-        method: "POST", 
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-            "name": signUpName,  
-            "email": signUpMail,
-            "password": signUpPassword
-            })
-    })
-    // .then(response => response.json())
-    .then(data => {
-        console.log(data); 
-      })
-    .catch(error => {
-    console.log(error);
-    });
-
-});
-
-//會員登入，存入token
-const signInButton = document.getElementById("signIn_Button");
-signInButton.addEventListener("click", () => {
-
-    const signInMail = document.getElementById("signIn_Mail").value;;
-    const signInPassword = document.getElementById("signIn_Password").value;;
-
-    const signInUrl = "/api/user/auth";
-
-    fetch(signInUrl, {
-        method: "PUT", 
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-            "email": signInMail,
-            "password": signInPassword
-            })
-    })
-    .then(response => response.json())
-    .then(data => {
-        let token = data.token;
-        localStorage.setItem("token", token);
-        // console.log(data); 
-        // console.log(token); 
-
-      })
-    .catch(error => {
-    console.log(error);
-    });
-
-});
-
-//會員資訊，提供token
-const testA = document.getElementById("testA");
-testA.addEventListener("click", () => {
-
-    let token = localStorage.getItem("token");
-    console.log(token);
-
-    const signInUrl = "/api/user/auth";
-    fetch(signInUrl, {
-        method: "GET", 
-        headers: {
-            "Content-Type":"application/json",
-            "Authorization":token
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data); 
-      })
-    .catch(error => {
-    console.log(error);
-    });
-
-});
-
-//登出帳號
-const testB = document.getElementById("testB");
-testB.addEventListener("click", () => {
-    localStorage.removeItem("token");
-});
