@@ -201,8 +201,7 @@ def signin():
 
 		cursor.execute("SELECT * FROM members WHERE email = %s", (email,))
 		db_id,db_name,db_email,db_password = cursor.fetchone()
-		cursor.close()
-		db_connection.close()
+
 
 		if db_id is not None and email == db_email and password == db_password:
 			token_data = {
@@ -230,6 +229,9 @@ def signin():
 			"message": error_message
 			}
 		return jsonify(response),500
+	finally:
+		cursor.close()
+		db_connection.close()
 
 # 會員資訊
 @app.route("/api/user/auth")

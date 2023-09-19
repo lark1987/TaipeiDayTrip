@@ -50,11 +50,18 @@ signInButton.addEventListener("click", () => {
             "password": signInPassword
             })
     })
-    .then(response => response.json())
+    // .then(response => response.json())
     .then(data => {
-        let token = data.token;
-        localStorage.setItem("token", token);
-        location.reload();
+        if (data.token) {
+            let token = data.token;
+            localStorage.setItem("token", token);
+            // location.reload();
+        }
+        else if(data.error){
+            // let message=data.message
+            // console.log(message)
+            console.log(data)
+        }
       })
     .catch(error => {
     console.log(error);
@@ -75,7 +82,7 @@ function tokenCheck(){
                 "Authorization":token
             }
         })
-        .then(response => response.json())
+        // .then(response => response.json())
         .then(data => {
             console.log(data); 
             logoutButtonSet()
@@ -90,7 +97,7 @@ function tokenCheck(){
     }
 }
 
-//登出按鈕
+//登出功能
 function logoutButtonSet(){
     loginButton.textContent="登出帳戶";
     loginButton.addEventListener("click", () => {
@@ -98,7 +105,7 @@ function logoutButtonSet(){
         location.reload();
     })
 }
-//登入按鈕
+//頂端列的登入按鈕
 function loginButtonSet(){
     loginButton.textContent="登入/註冊";
     loginButton.addEventListener("click", () => {
