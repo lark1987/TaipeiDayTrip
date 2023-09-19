@@ -122,7 +122,7 @@ signUp_signIn_button.addEventListener("click", () => {
     document.querySelector(".overlay").classList.remove("hide");
 })
 
-//關閉按鈕 🚩
+//關閉按鈕
 const closePopupButtons = document.querySelectorAll(".close");
 closePopupButtons.forEach(button => {
     button.addEventListener("click", () => {
