@@ -217,6 +217,12 @@ def signin():
 					"token": token
 				}
 				return jsonify(response)
+			else:
+				response = {
+					"error": True,
+					"message": "登入失敗，帳號或密碼輸入錯誤"
+					}
+				return jsonify(response),400
 		else:
 			response = {
 				"error": True,

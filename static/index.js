@@ -209,4 +209,3 @@ const homepageURL = `${protocol}//${host}`;
 
 window.location.href = homepageURL; 
 })  
-
