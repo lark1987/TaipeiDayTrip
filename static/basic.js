@@ -26,7 +26,7 @@ popup.innerHTML = `
     </div>
     <input type="text" id="signUp_Name" placeholder="輸入姓名"><br>
     <input type="text" id="signUp_Mail" placeholder="輸入電子信箱"><br>
-    <input type="text" id="signUp_Password" placeholder="輸入密碼"><br>
+    <input type="password" id="signUp_Password" placeholder="輸入密碼"><br>
     <button id="signUp_Button">註冊新帳戶</button></br>
     <div>
         <span class="signUp_remind">已經有帳戶了？</span>
@@ -42,7 +42,7 @@ popup.innerHTML = `
         <span class="close">&times;</span><br>
     </div>
     <input type="text" id="signIn_Mail" placeholder="輸入電子信箱"><br>
-    <input type="text" id="signIn_Password" placeholder="輸入密碼"><br>
+    <input type="password" id="signIn_Password" placeholder="輸入密碼"><br>
     <button id="signIn_Button">登入帳戶</button></br>
     <div>
         <span class="signIn_remind">還沒有帳戶？</span>
