@@ -166,6 +166,7 @@ closePopupButtons.forEach(button => {
 });
 
 
+
 const regexName = /^[\p{L}0-9]+$/u;  //可輸入文字數字
 const regexMail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const regexPassword = /^[A-Za-z0-9]+$/  // 可輸入英文大小寫和數字
