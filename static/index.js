@@ -198,14 +198,3 @@ list_container.addEventListener("click", function(event) {
         searchData(search_value)
     }
 });
-
-// 首頁按鈕
-const header_LOGO = document.querySelector(".header_LOGO");
-header_LOGO.addEventListener("click", ()=>{
-
-const protocol = window.location.protocol; 
-const host = window.location.host;
-const homepageURL = `${protocol}//${host}`;
-
-window.location.href = homepageURL; 
-})  

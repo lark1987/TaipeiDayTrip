@@ -3,11 +3,6 @@
 let id=window.location.pathname.split("/").pop();
 let url="/api/attractions/"+id
 
-let currentSlide = 0; 
-const prevBtn = document.getElementById("prevBtn");
-const nextBtn = document.getElementById("nextBtn");
-const dotContainer = document.getElementById("dot_container");
-
 getData(url)
 
 // 連線取得資料、存入緩存，或使用緩存資料
@@ -82,7 +77,12 @@ function handleData(data){
     createDots();
 }
 
+
 // 圖片輪播
+let currentSlide = 0; 
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const dotContainer = document.getElementById("dot_container");
 function showSlide(index) {
   slides.forEach((slide, i) => {
     if (i === index) {
@@ -93,17 +93,14 @@ function showSlide(index) {
   });
   updateDots(index); 
 }
-
 prevBtn.addEventListener("click", () => {
   currentSlide = (currentSlide - 1 + slides.length) % slides.length;
   showSlide(currentSlide);
 });
-
 nextBtn.addEventListener("click", () => {
   currentSlide = (currentSlide + 1) % slides.length;
   showSlide(currentSlide);
 });
-
 
 // 圖片輪播點點
 function createDots() {
@@ -116,7 +113,6 @@ function createDots() {
       dotContainer.appendChild(dot);
     });
 }
-  
 function updateDots(index) {
   const dots = document.querySelectorAll(".dot");
   dots.forEach((dot, i) => {
@@ -142,14 +138,3 @@ function updateFee() {
         fee.textContent = "新台幣 2500 元";
     }
 }
-
-// 首頁按鈕
-const header_LOGO = document.querySelector(".header_LOGO");
-header_LOGO.addEventListener("click", ()=>{
-
-const protocol = window.location.protocol; 
-const host = window.location.host;
-const homepageURL = `${protocol}//${host}`;
-
-window.location.href = homepageURL; 
-})  

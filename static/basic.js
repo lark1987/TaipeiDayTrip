@@ -11,13 +11,11 @@ header.innerHTML = `
     </div>
     </header>
 `;
-
 // footer
 const footer = document.querySelector(".footer_load");
 footer.innerHTML = `
     <footer id="footer"> COPYRIGHT @ 2023台北一日遊  </footer>
 `;
-
 // popup
 const popup = document.querySelector(".popup_load");
 popup.innerHTML = `
@@ -54,3 +52,14 @@ popup.innerHTML = `
     </div>
     <div class="overlay hide"></div>
 `;
+
+// 首頁按鈕
+const header_LOGO = document.querySelector(".header_LOGO");
+header_LOGO.addEventListener("click", ()=>{
+
+const protocol = window.location.protocol; 
+const host = window.location.host;
+const homepageURL = `${protocol}//${host}`;
+
+window.location.href = homepageURL; 
+})  
