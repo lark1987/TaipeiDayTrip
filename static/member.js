@@ -81,11 +81,10 @@ signUpButton.addEventListener("click", () => {
     .then(response => response.json())
     .then(data => {
         if (data.ok) {
-            document.querySelector(".signUp_remind").classList.add("hide");
-            document.querySelector(".signUp_success").classList.remove("hide");
+            signUpMessageSet("註冊成功！")
         }
         else if(data.error){
-            alert(data.message)
+            signUpMessageSet(data.message)
         }
       })
     .catch(error => {
@@ -130,7 +129,7 @@ signInButton.addEventListener("click", () => {
             location.reload();
         }
         else if(data.error){
-            alert(data.message)
+            signInMessageSet(data.message)
         }
       })
     .catch(error => {
@@ -170,15 +169,28 @@ closePopupButtons.forEach(button => {
 const regexName = /^[\p{L}0-9]+$/u;  //可輸入文字數字
 const regexMail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const regexPassword = /^[A-Za-z0-9]+$/  // 可輸入英文大小寫和數字
-//彈出畫面的輸入框檢核
+//輸入框檢核
 function contentCheck(regex,content){
     if (content === "") {
-        alert("未填寫資料");
+        alert("尚有資料未填寫");
         return false;
     }
     if (!regex.test(content)) {
-        alert("輸入格式錯誤");
+        alert("資料格式輸入錯誤");
         return false;
     }
     return true;   
+}
+
+//註冊頁面錯誤訊息
+function signUpMessageSet(text){
+    document.querySelector(".signUp_remind").classList.add("hide");
+    document.querySelector(".signUp_message").textContent=text;
+    document.querySelector(".signUp_message").classList.remove("hide");
+}
+//登入頁面錯誤訊息
+function signInMessageSet(text){
+    document.querySelector(".signIn_remind").classList.add("hide");
+    document.querySelector(".signIn_message").textContent=text;
+    document.querySelector(".signIn_message").classList.remove("hide");
 }

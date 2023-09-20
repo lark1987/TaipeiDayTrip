@@ -30,7 +30,7 @@ popup.innerHTML = `
     <button id="signUp_Button">註冊新帳戶</button></br>
     <div>
         <span class="signUp_remind">已經有帳戶了？</span>
-        <span class="signUp_success hide">註冊成功！</span>
+        <span class="signUp_message hide"></span>
         <span class="signUp_signIn">點此登入</span>
     </div>
     </div>
