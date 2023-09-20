@@ -4,7 +4,9 @@ from mysql.connector import pooling
 import json
 import re
 import jwt
-from werkzeug.security import check_password_hash
+import datetime
+from datetime import datetime, timedelta
+# from werkzeug.security import check_password_hash
 
 
 app=Flask(__name__)
@@ -206,10 +208,14 @@ def signin():
 			db_id,db_name,db_email,db_password = result
 			
 			if email == db_email and password == db_password:
+
+				expiration_time = datetime.utcnow() + timedelta(days=7)
+
 				token_data = {
 					"id":db_id,
 					"name":db_name,
 					"email":db_email,
+					"exp": expiration_time,
 				}
 				token = jwt.encode(token_data, app.config["SECRET_KEY"], algorithm="HS256")
 

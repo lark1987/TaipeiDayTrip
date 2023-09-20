@@ -6,7 +6,7 @@ header.innerHTML = `
         <div class="header_LOGO">台北一日遊</div>
         <div class="header_option">
             <span>預定行程　</span>
-            <span class="loginButton">登入/註冊</span>
+            <span class="loginButton"></span>
         </div>
     </div>
     </header>

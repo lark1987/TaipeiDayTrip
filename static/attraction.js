@@ -1,3 +1,7 @@
+let currentSlide = 0; 
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const dotContainer = document.getElementById("dot_container");
 
 // 取得網址路徑的景點編號
 let id=window.location.pathname.split("/").pop();
@@ -79,10 +83,7 @@ function handleData(data){
 
 
 // 圖片輪播
-let currentSlide = 0; 
-const prevBtn = document.getElementById("prevBtn");
-const nextBtn = document.getElementById("nextBtn");
-const dotContainer = document.getElementById("dot_container");
+
 function showSlide(index) {
   slides.forEach((slide, i) => {
     if (i === index) {
