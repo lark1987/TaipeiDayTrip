@@ -2,6 +2,11 @@
 let nextPage = 0;
 let search_value = "";
 
+window.addEventListener("load", () => {
+    url="/api/mrts"
+    getData(url);
+})
+
 // 獲取緩存資料
 function getCacheData(url) {
     const cachedData=sessionStorage.getItem(url);
@@ -155,7 +160,6 @@ function searchData (search_value) {
     getData(url);
 }
 
-
 // 捷運站列表水平滾動
 const scrollContainer = document.querySelector(".scroll_container");
 const scrollLeftButton = document.querySelector("#scroll_left");
@@ -176,12 +180,6 @@ scrollRightButton.addEventListener("click", () => {
   });
 });
 
-window.addEventListener("load", () => {
-        url="/api/mrts"
-        getData(url);
-})
-
-
 // 創建 div 載入捷運列表
 function handleMRT(data){
 
@@ -200,18 +198,3 @@ list_container.addEventListener("click", function(event) {
         searchData(search_value)
     }
 });
-
-// 首頁按鈕
-const header_LOGO = document.querySelector(".header_LOGO");
-header_LOGO.addEventListener("click", ()=>{
-
-const protocol = window.location.protocol; 
-const host = window.location.host;
-const homepageURL = `${protocol}//${host}`;
-
-window.location.href = homepageURL; 
-})  
-
-
-
-  
