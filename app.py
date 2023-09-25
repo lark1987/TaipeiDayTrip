@@ -236,11 +236,7 @@ def signin():
 @app.route("/api/user/auth")
 def signin_data():
 	try:
-		token = request.headers.get("Authorization")
-		decoded_token = jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
-		token_id = decoded_token.get("id") 
-		token_name = decoded_token.get("name") 
-		token_email = decoded_token.get("email") 
+		token_id, token_name, token_email = token_decode()
 		response = {"data":{
 			"id":token_id,
 			"name":token_name,
@@ -259,7 +255,53 @@ def signin_data():
 # 建立行程
 @app.route("/api/booking",methods=["POST"])
 def book_create():
-	return
+		
+	data = request.json
+	attractionId=data["attractionId"] 
+	date=data["date"] 
+	time=data["time"]
+	price=data["price"]
+	token_id, token_name, token_email = token_decode()
+
+	if token_id is None:
+		response = {
+		"error": True,
+		"message": "未登入系統，拒絕存取",
+		}
+		return jsonify(response), 403
+
+	if date is None or time is None or price is None:
+		response = {
+		"error": True,
+		"message": "建立失敗，輸入不正確或其他原因",
+		}
+		return jsonify(response), 400
+
+	try:
+		db_connection = connection_pool.get_connection()
+		cursor = db_connection.cursor()
+
+		cursor.execute('''
+		INSERT INTO bookings (member_id, attractionID, date, time, price) VALUES (%s, %s, %s, %s, %s)
+		''', (token_id, attractionId, date, time, price))
+		db_connection.commit()
+
+		response = {"ok": True}
+		return jsonify(response)
+
+	except Exception as e :  
+		error_message=str(e)
+		response={
+			"error":True,
+			"message": error_message
+			}
+		return jsonify(response),500
+	finally:
+		cursor.close()
+		db_connection.close()
+
+
+
 
 
 
@@ -293,6 +335,14 @@ def get_attractions_data(SQLdata):
 		attractions_data_list.append(attractions_data)
 	return attractions_data_list
 
+# token解碼處理
+def token_decode():
+	token = request.headers.get("Authorization")
+	decoded_token = jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
+	token_id = decoded_token.get("id") 
+	token_name = decoded_token.get("name") 
+	token_email = decoded_token.get("email") 
+	return token_id, token_name, token_email
 
 
 app.run(host="0.0.0.0", port=3000)
