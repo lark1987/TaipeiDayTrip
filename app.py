@@ -6,7 +6,6 @@ import re
 import jwt
 import datetime
 from datetime import datetime, timedelta
-# from werkzeug.security import check_password_hash
 
 
 app=Flask(__name__)
@@ -222,12 +221,6 @@ def signin():
 					"message": "登入失敗，帳號或密碼輸入錯誤！"
 					}
 				return jsonify(response),400
-		# else:
-		# 	response = {
-		# 		"error": True,
-		# 		"message": "登入失敗，帳號尚未註冊"
-		# 		}
-		# 	return jsonify(response),400
 	except Exception as e :  
 		error_message=str(e)
 		response={
@@ -262,7 +255,13 @@ def signin_data():
 			"message": error_message
 			}
 		return jsonify(response),500
-	
+
+# 建立行程
+@app.route("/api/booking",methods=["POST"])
+def book_create():
+	return
+
+
 
 
 

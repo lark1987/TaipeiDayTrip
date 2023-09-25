@@ -83,7 +83,6 @@ function handleData(data){
 
 
 // 圖片輪播
-
 function showSlide(index) {
   slides.forEach((slide, i) => {
     if (i === index) {
