@@ -12,9 +12,9 @@ cursor=db_connection.cursor()
 create_table_members="""
 CREATE TABLE IF NOT EXISTS bookings (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    member_id INT,
+    member_id INT UNIQUE,
     attractionID INT,
-    date DATE,
+    date VARCHAR(255),
     time VARCHAR(255),
     price INT,
     FOREIGN KEY (member_id) REFERENCES members(id)
