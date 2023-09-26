@@ -1,8 +1,7 @@
 
-//測試按鈕：行程資料
-
-const testButton = document.querySelector(".test");
-testButton.addEventListener("click", () => {
+// 取得預定行程 (按鈕測試)
+const test1Button = document.querySelector(".test1");
+test1Button.addEventListener("click", () => {
     
     let token = localStorage.getItem("token");
     const bookingUrl = "/api/booking";
@@ -12,22 +11,32 @@ testButton.addEventListener("click", () => {
             "Content-Type": "application/json",
             "Authorization":token
         },
-        // body: JSON.stringify({
-        //     "attractionId": attractionId,
-        //     "date": bookingDate,
-        //     "time": bookingTime,
-        //     "price": bookingPrice
-        // })
     })
     .then(response => response.json())
     .then(data => {
         console.log(data);
-        // if (data.ok) {
-        //     console.log(data.ok);
-        // }
-        // else if(data.error){
-        //     console.log(data.error)
-        // }
+      })
+    .catch(error => {
+    console.log(error);
+    });
+})
+
+// 刪除預定行程 (按鈕測試)
+const test2Button = document.querySelector(".test2");
+test2Button.addEventListener("click", () => {
+    
+    let token = localStorage.getItem("token");
+    const bookingUrl = "/api/booking";
+    fetch(bookingUrl, {
+        method: "DELETE", 
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization":token
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
       })
     .catch(error => {
     console.log(error);

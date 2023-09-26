@@ -305,11 +305,12 @@ def booking_create():
 		cursor.close()
 		db_connection.close()
 
-# 取得行程，進度在這裡 ~~~~
+# 取得行程，未處理token不存在的狀況
 @app.route("/api/booking",methods=["GET"])
 def booking_get():
 	try:
 		token_id, token_name, token_email = token_decode()
+
 		db_connection=connection_pool.get_connection()
 		cursor=db_connection.cursor()
 		cursor.execute("SELECT * FROM bookings WHERE member_id=%s",(token_id,))
@@ -319,7 +320,6 @@ def booking_get():
 		cursor.execute("SELECT * FROM attractions WHERE id=%s",(data_attractionID,))
 		attractions_data=cursor.fetchall()
 		attractions_data_list = get_attractions_data(attractions_data)
-		print(attractions_data_list)
 
 		response = {"data": {
 			"attraction": {
@@ -344,11 +344,29 @@ def booking_get():
 		cursor.close()
 		db_connection.close()
 
-
-
-
-
-
+# 刪除行程
+@app.route("/api/booking",methods=["DELETE"])
+def booking_delete():
+	try:
+		token_id, token_name, token_email = token_decode()
+		db_connection=connection_pool.get_connection()
+		cursor=db_connection.cursor()
+		cursor.execute("SET SQL_SAFE_UPDATES=0;")
+		cursor.execute("DELETE FROM bookings WHERE member_id=%s",(token_id,))
+		db_connection.commit() 
+		response = {"ok": True}
+		return jsonify(response)
+	except Exception as e :  
+		error_message=str(e)
+		response={
+			"error":True,
+			"message": error_message
+			}
+		return jsonify(response),500
+	finally:
+		cursor.close()
+		db_connection.close()
+	
 
 
 
@@ -380,11 +398,12 @@ def get_attractions_data(SQLdata):
 # token解碼處理
 def token_decode():
 	token = request.headers.get("Authorization")
-	decoded_token = jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
-	token_id = decoded_token.get("id") 
-	token_name = decoded_token.get("name") 
-	token_email = decoded_token.get("email") 
-	return token_id, token_name, token_email
+	if token is not None:
+		decoded_token = jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
+		token_id = decoded_token.get("id") 
+		token_name = decoded_token.get("name") 
+		token_email = decoded_token.get("email") 
+		return token_id, token_name, token_email
 
 
 app.run(host="0.0.0.0", port=3000)
