@@ -5,7 +5,7 @@ header.innerHTML = `
     <div class="header_content">
         <div class="header_LOGO">台北一日遊</div>
         <div class="header_option">
-            <span>預定行程　</span>
+            <span class="header_bookingButton">預定行程　</span>
             <span class="loginButton"></span>
         </div>
     </div>
@@ -62,4 +62,21 @@ const host = window.location.host;
 const homepageURL = `${protocol}//${host}`;
 
 window.location.href = homepageURL; 
-})  
+}) 
+
+// 預定行程按鈕
+const headerBookingButton = document.querySelector(".header_bookingButton");
+headerBookingButton.addEventListener("click", ()=>{
+
+    let token = localStorage.getItem("token");
+    if(token){
+        const protocol = window.location.protocol; 
+        const host = window.location.host;
+        const bookingPageURL = protocol+"//"+host+"/booking";
+        window.location.href = bookingPageURL; }
+    else{
+        document.querySelector(".signIn_container").classList.remove("hide");
+        document.querySelector(".signUp_container").classList.add("hide");
+        document.querySelector(".overlay").classList.remove("hide");
+    }
+}) 

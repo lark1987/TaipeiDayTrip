@@ -177,7 +177,7 @@ bookingButton.addEventListener("click", () => {
         .then(data => {
             console.log(data);
             if (data.ok) {
-                console.log(data.ok);
+                goBookingPage()
             }
             else if(data.error){
                 console.log(data.error)
@@ -194,3 +194,13 @@ bookingButton.addEventListener("click", () => {
     }
 
 })
+
+
+// 導向行程頁面
+function goBookingPage(){
+  const protocol = window.location.protocol; 
+  const host = window.location.host;
+  const bookingPageURL = protocol+"//"+host+"/booking";
+
+  window.location.href = bookingPageURL; 
+}

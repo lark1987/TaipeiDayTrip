@@ -1,5 +1,15 @@
 
-getbooking()
+// 頁面載入資格確認
+let token = localStorage.getItem("token");
+if(token){
+    getbooking()
+}
+else{
+    const protocol = window.location.protocol; 
+    const host = window.location.host;
+    const homepageURL = `${protocol}//${host}`;
+    window.location.href = homepageURL; 
+}
 
 // 取得預定行程
 function getbooking(){
@@ -14,8 +24,9 @@ function getbooking(){
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
-        getdata(data);
+        if(data){
+            getdata(data);
+        }
       })
     .catch(error => {
     console.log(error);
@@ -36,6 +47,7 @@ function getdata(data){
     booking_price.textContent=data.data.price;
     const booking_address = document.querySelector(".booking_address");
     booking_address.textContent=data.data.attraction.address;
+    getMemberCache()
 }
 
 // 刪除預定行程
@@ -60,9 +72,16 @@ bookingDeleteButton.addEventListener("click", () => {
     });
 })
 
-
-
-//測試按鈕
-const test3Button = document.querySelector(".test3");
-test3Button.addEventListener("click", () => {
-})
+// 載入會員資料
+function getMemberCache() {
+    const cachedData=sessionStorage.getItem("memberData");
+    if (cachedData) {
+        const data=JSON.parse(cachedData)
+        const helloMemberName = document.querySelector(".helloMemberName");
+        helloMemberName.textContent=data.data.name;
+        const inputMemberName = document.querySelector(".inputMemberName");
+        inputMemberName.placeholder =data.data.name;
+        const inputMemberMail = document.querySelector(".inputMemberMail");
+        inputMemberMail.placeholder =data.data.email;
+    }
+}

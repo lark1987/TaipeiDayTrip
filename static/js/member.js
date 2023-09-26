@@ -15,9 +15,10 @@ function tokenCheck(){
                 "Authorization":token
             }
         })
-        // .then(response => response.json())
+        .then(response => response.json())
         .then(data => { 
             logoutButtonSet()
+            setMemberCache(data)
           })
         .catch(error => {
         console.log(error);
@@ -43,6 +44,10 @@ function loginButtonSet(){
         document.querySelector(".signUp_container").classList.add("hide");
         document.querySelector(".overlay").classList.remove("hide");
     })
+}
+// 將會員資料存入緩存
+function setMemberCache(data) {
+    sessionStorage.setItem("memberData", JSON.stringify(data));
 }
 
 
