@@ -33,10 +33,10 @@ input[type="radio"]:checked + .time_button::before {
     background-color:#448899; 
 }
 
-/* .booking_button{
+.booking_button{
     font-size:19px;color: white;
     border:none;border-radius: 5px;padding:10px 20px;margin:10px;
-    background-color:#448899;} */
+    background-color:#448899;}
 
 /* hr {border-width: 0px 0px 1px 0px;
     border-color: #E8E8E8;
