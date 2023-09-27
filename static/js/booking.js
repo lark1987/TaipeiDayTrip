@@ -78,7 +78,7 @@ bookingDeleteButton.addEventListener("click", () => {
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
+        location.reload(); 
       })
     .catch(error => {
     console.log(error);
@@ -106,3 +106,4 @@ function noBookingData(){
     const noBookingShow = document.querySelector(".noBookingShow");
     noBookingShow.classList.remove("hide")
 }
+

@@ -255,16 +255,16 @@ def signin_data():
 # 建立行程
 @app.route("/api/booking",methods=["POST"])
 def booking_create():
-	db_connection = connection_pool.get_connection()
-	cursor = db_connection.cursor()
 	try:
+		token_id, token_name, token_email = token_decode()
+
+		db_connection = connection_pool.get_connection()
+		cursor = db_connection.cursor()
 		data = request.json
 		attractionId=data["attractionId"] 
 		date=data["date"]
 		time=data["time"]
 		price=data["price"]
-		token_id, token_name, token_email = token_decode()
-
 		if date == "" or time == "" or price == "":
 			response = {
 			"error": True,
@@ -295,7 +295,7 @@ def booking_create():
 		cursor.close()
 		db_connection.close()
 
-# 取得行程，未處理沒有行程的回應
+# 取得行程
 @app.route("/api/booking",methods=["GET"])
 def booking_get():
 	try:
