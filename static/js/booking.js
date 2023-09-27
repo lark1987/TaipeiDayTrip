@@ -35,6 +35,15 @@ function getbooking(){
 
 // 載入預定資訊
 function getdata(data){
+
+    let time="";
+    if (data.data.time=="morning"){
+        time="早上九點到中午十二點"
+    }
+    if (data.data.time=="afternoon"){
+        time="下午一點到下午四點"
+    }
+
     const attraction_picture = document.querySelector(".attraction_picture");
     attraction_picture.setAttribute("src",data.data.attraction.image);
     const attraction_name = document.querySelector(".attraction_name");
@@ -42,9 +51,11 @@ function getdata(data){
     const booking_date = document.querySelector(".booking_date");
     booking_date.textContent=data.data.date;
     const booking_time = document.querySelector(".booking_time");
-    booking_time.textContent=data.data.time;
+    booking_time.textContent=time;
     const booking_price = document.querySelector(".booking_price");
-    booking_price.textContent=data.data.price;
+    const bookingTotalPrice = document.querySelector(".bookingTotalPrice");
+    booking_price.textContent="新台幣"+data.data.price+"元";
+    bookingTotalPrice.textContent="總價：新台幣"+data.data.price+"元";
     const booking_address = document.querySelector(".booking_address");
     booking_address.textContent=data.data.attraction.address;
     getMemberCache()
