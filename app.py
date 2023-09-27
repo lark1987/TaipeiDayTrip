@@ -252,48 +252,38 @@ def signin_data():
 			}
 		return jsonify(response),500
 
-# 建立行程，無法正確返回錯誤訊息！
+# 建立行程
 @app.route("/api/booking",methods=["POST"])
 def booking_create():
+	db_connection = connection_pool.get_connection()
+	cursor = db_connection.cursor()
 	try:
 		data = request.json
 		attractionId=data["attractionId"] 
-		date=data["date"] 
+		date=data["date"]
 		time=data["time"]
 		price=data["price"]
 		token_id, token_name, token_email = token_decode()
 
-		if token_id is None:
-			response = {
-			"error": True,
-			"message": "未登入系統，拒絕存取",
-			}
-			return jsonify(response), 403
-
-		if date is None or time is None or price is None:
+		if date == "" or time == "" or price == "":
 			response = {
 			"error": True,
 			"message": "建立失敗，輸入不正確或其他原因",
 			}
 			return jsonify(response), 400
-
-		db_connection = connection_pool.get_connection()
-		cursor = db_connection.cursor()
-
-		cursor.execute('''
-		INSERT INTO bookings (member_id, attractionID, date, time, price) 
-		VALUES (%s, %s, %s, %s, %s)
-		ON DUPLICATE KEY UPDATE
-		attractionID = VALUES(attractionID),
-		date = VALUES(date),
-		time = VALUES(time),
-		price = VALUES(price);
-		''', (token_id, attractionId, date, time, price, ))
-		db_connection.commit()
-
-		response = {"ok": True}
-		return jsonify(response)
-
+		else:
+			cursor.execute('''
+			INSERT INTO bookings (member_id, attractionID, date, time, price) 
+			VALUES (%s, %s, %s, %s, %s)
+			ON DUPLICATE KEY UPDATE
+			attractionID = VALUES(attractionID),
+			date = VALUES(date),
+			time = VALUES(time),
+			price = VALUES(price);
+			''', (token_id, attractionId, date, time, price, ))
+			db_connection.commit()
+			response = {"ok": True}
+			return jsonify(response)
 	except Exception as e :  
 		error_message=str(e)
 		response={
@@ -305,7 +295,7 @@ def booking_create():
 		cursor.close()
 		db_connection.close()
 
-# 取得行程，未處理token不存在的狀況
+# 取得行程，未處理沒有行程的回應
 @app.route("/api/booking",methods=["GET"])
 def booking_get():
 	try:
@@ -315,24 +305,27 @@ def booking_get():
 		cursor=db_connection.cursor()
 		cursor.execute("SELECT * FROM bookings WHERE member_id=%s",(token_id,))
 		bookings_data=cursor.fetchone()
-		data_ID,data_memberID,data_attractionID,data_date,data_time,data_price = bookings_data
 
-		cursor.execute("SELECT * FROM attractions WHERE id=%s",(data_attractionID,))
-		attractions_data=cursor.fetchall()
-		attractions_data_list = get_attractions_data(attractions_data)
-
-		response = {"data": {
-			"attraction": {
-				"id": attractions_data_list[0]["id"],
-				"name": attractions_data_list[0]["name"],
-				"address": attractions_data_list[0]["address"],
-				"image": attractions_data_list[0]["images"][0],
-			},
-			"date": data_date,
-			"time": data_time,
-			"price": data_price
-		}}
-		return jsonify(response)
+		if bookings_data is not None:
+			data_ID,data_memberID,data_attractionID,data_date,data_time,data_price = bookings_data
+			cursor.execute("SELECT * FROM attractions WHERE id=%s",(data_attractionID,))
+			attractions_data=cursor.fetchall()
+			attractions_data_list = get_attractions_data(attractions_data)
+			response = {"data": {
+				"attraction": {
+					"id": attractions_data_list[0]["id"],
+					"name": attractions_data_list[0]["name"],
+					"address": attractions_data_list[0]["address"],
+					"image": attractions_data_list[0]["images"][0],
+				},
+				"date": data_date,
+				"time": data_time,
+				"price": data_price
+			}}
+			return jsonify(response)
+		else:
+			response = {"data":None}
+			return jsonify(response)
 	except Exception as e :  
 		error_message=str(e)
 		response={
@@ -395,7 +388,7 @@ def get_attractions_data(SQLdata):
 		attractions_data_list.append(attractions_data)
 	return attractions_data_list
 
-# token解碼處理
+# token確認及解碼
 def token_decode():
 	token = request.headers.get("Authorization")
 	if token is not None:
@@ -404,6 +397,12 @@ def token_decode():
 		token_name = decoded_token.get("name") 
 		token_email = decoded_token.get("email") 
 		return token_id, token_name, token_email
+	else:
+		response = {
+		"error": True,
+		"message": "未登入系統，拒絕存取",
+		}
+		return jsonify(response), 403
 
 
 app.run(host="0.0.0.0", port=3000)

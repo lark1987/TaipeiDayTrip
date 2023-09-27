@@ -24,8 +24,13 @@ function getbooking(){
     })
     .then(response => response.json())
     .then(data => {
-        if(data){
+        getMemberCache()
+        if(data.data){
             getdata(data);
+        }
+        else{
+            console.log("null");
+            noBookingData();
         }
       })
     .catch(error => {
@@ -35,7 +40,6 @@ function getbooking(){
 
 // 載入預定資訊
 function getdata(data){
-
     let time="";
     if (data.data.time=="morning"){
         time="早上九點到中午十二點"
@@ -43,7 +47,6 @@ function getdata(data){
     if (data.data.time=="afternoon"){
         time="下午一點到下午四點"
     }
-
     const attraction_picture = document.querySelector(".attraction_picture");
     attraction_picture.setAttribute("src",data.data.attraction.image);
     const attraction_name = document.querySelector(".attraction_name");
@@ -58,7 +61,6 @@ function getdata(data){
     bookingTotalPrice.textContent="總價：新台幣"+data.data.price+"元";
     const booking_address = document.querySelector(".booking_address");
     booking_address.textContent=data.data.attraction.address;
-    getMemberCache()
 }
 
 // 刪除預定行程
@@ -95,4 +97,12 @@ function getMemberCache() {
         const inputMemberMail = document.querySelector(".inputMemberMail");
         inputMemberMail.placeholder =data.data.email;
     }
+}
+
+// 載入無預定資料
+function noBookingData(){
+    const noBookingHide = document.querySelector(".noBookingHide");
+    noBookingHide.classList.add("hide")
+    const noBookingShow = document.querySelector(".noBookingShow");
+    noBookingShow.classList.remove("hide")
 }
