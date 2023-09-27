@@ -3,11 +3,11 @@
 
 .booking_hello{margin:30px 0px;}
 .booking_box{display:flex;position: relative;}
-.attraction_picture{width:250px;height:200px ;object-fit: cover}
+.attraction_picture{width:250px ;object-fit: cover}
 .attraction_name{color:#448899;}
 .booking_info{padding: 10px 30px;}
 .booking_info span{line-height:30px}
-.booking_delete{width: 30px; height: 30px;position: absolute; right:0;}
+.booking_delete{width: 30px; height: 30px;position: absolute; right:0;top:0}
 
 .text19{
     font-size: 19px;
@@ -33,3 +33,15 @@
     font-size:19px;color: white;
     border:none;border-radius: 5px;padding:10px 20px;
     background-color:#448899;}
+
+
+@media screen and (max-width:1200px){
+    .container{width:90%;}
+} 
+
+@media screen and (max-width:600px){
+    .booking_box{display:flex;flex-flow:column wrap;}
+    .attraction_picture{width:100%;}
+    .booking_info{padding: 20px 0px;}
+    .booking_delete{top:auto;}
+}
