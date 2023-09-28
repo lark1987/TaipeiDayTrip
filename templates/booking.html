@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台北一日遊</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/basic.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/booking.css">
+</head>
+<body>
+    <div class="header_load"></div>
+    <div class="popup_load"></div>
+    <div class="container">
+
+        <div class="booking_hello text19"><b>您好，<span class="helloMemberName"></span>，待預定的行程如下：</b></div>
+        <div class="noBookingHide">
+            <div class="booking_box">
+                <img class="attraction_picture"></img>
+                <div class="booking_info">
+                    <b><div class="attraction_name"></div></b><br>
+                    <b>日期：</b><span class="booking_date"></span><br>
+                    <b>時間：</b><span class="booking_time"></span><br>
+                    <b>費用：</b><span class="booking_price"></span><br>
+                    <b>地點：</b><span class="booking_address"></span><br><br>
+                    <img src="../static/image/delete.png" class="booking_delete"></img><br>
+                </div>
+            </div>
+
+
+            <br><hr><br>
+            <div class="member_info">
+            <div class="text19">您的聯絡資訊</div>
+            聯絡姓名：<input type="text" class="inputMemberName"><br>
+            聯絡信箱：<input type="text" class="inputMemberMail"><br>
+            手機號碼：<input type="text"><br>
+            <b>請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</b>
+            </div>
+
+            <br><hr><br>
+            <div class="member_info">
+            <div class="text19">信用卡付款資訊</div>
+            卡片號碼：<input type="text" placeholder="**** **** **** ****"><br>
+            過期時間：<input type="text" placeholder="MM/YY"><br>
+            驗證密碼：<input type="text" placeholder="CVV"><br>
+            </div>
+
+            <br><hr><br>
+            <div class="position_left">
+            <b><span class="bookingTotalPrice"></span></b><br>
+            <button class="booking_button">確認訂購並付款</button>
+            </div>
+            <br>
+        </div>
+        <br>
+        <div class="noBookingShow hide">目前沒有任何待預定的行程</div>
+        <br>
+    </div>
+    <div class="footer_load"></div>
+
+</body>
+<script src="../static/js/basic.js"></script>
+<script src="../static/js/member.js"></script>
+<script src="../static/js/booking.js"></script>
+
+</html>

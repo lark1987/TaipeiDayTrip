@@ -1,0 +1,47 @@
+
+.container{width:1000px;margin:90px auto 10px auto}
+
+.booking_hello{margin:30px 0px;}
+.booking_box{display:flex;position: relative;}
+.attraction_picture{width:250px ;object-fit: cover}
+.attraction_name{color:#448899;}
+.booking_info{padding: 10px 30px;}
+.booking_info span{line-height:30px}
+.booking_delete{width: 30px; height: 30px;position: absolute; right:0;top:0}
+
+.text19{
+    font-size: 19px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.member_info input {
+    border: 1px solid #CCCCCC;
+    border-radius:5px;
+    padding: 10px 10px;
+    margin: 10px auto;
+    font-size: 16px;
+    width:200px;
+}
+
+.position_left{
+    display:flex;flex-direction: column;align-items: flex-end;
+}
+
+.booking_button{
+    width:173px;
+    font-size:19px;color: white;
+    border:none;border-radius: 5px;padding:10px 20px;
+    background-color:#448899;}
+
+
+@media screen and (max-width:1200px){
+    .container{width:90%;}
+} 
+
+@media screen and (max-width:600px){
+    .booking_box{display:flex;flex-flow:column wrap;}
+    .attraction_picture{width:100%;}
+    .booking_info{padding: 20px 0px;}
+    .booking_delete{top:auto;}
+}

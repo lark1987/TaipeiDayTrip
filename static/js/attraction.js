@@ -83,7 +83,6 @@ function handleData(data){
 
 
 // 圖片輪播
-
 function showSlide(index) {
   slides.forEach((slide, i) => {
     if (i === index) {
@@ -138,4 +137,70 @@ function updateFee() {
     } else if (afternoon.checked) {
         fee.textContent = "新台幣 2500 元";
     }
+}
+
+// 建立行程按鈕
+const bookingButton = document.querySelector(".booking_button");
+bookingButton.addEventListener("click", () => {
+
+    const attractionId=window.location.pathname.split("/").pop();
+    const bookingDate = document.querySelector(".booking_date").value;
+    const radioInputs = document.querySelectorAll('input[type="radio"][name="time"]');
+    let bookingTime = "";
+    let bookingPrice = "";
+    if (radioInputs[0].checked) {
+        bookingTime = "morning"
+        bookingPrice = "2000"
+        };
+    if (radioInputs[1].checked) {
+        bookingTime = "afternoon"
+        bookingPrice = "2500"
+        };
+    
+    let token = localStorage.getItem("token");
+    if(token){
+        const bookingUrl = "/api/booking";
+        fetch(bookingUrl, {
+            method: "POST", 
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization":token
+            },
+            body: JSON.stringify({
+                "attractionId": attractionId,
+                "date": bookingDate,
+                "time": bookingTime,
+                "price": bookingPrice
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            if (data.ok) {
+                goBookingPage()
+            }
+            else if(data.error){
+                console.log(data.error)
+            }
+          })
+        .catch(error => {
+        console.log(error);
+        });
+    }
+    else{
+        document.querySelector(".signIn_container").classList.remove("hide");
+        document.querySelector(".signUp_container").classList.add("hide");
+        document.querySelector(".overlay").classList.remove("hide");
+    }
+
+})
+
+
+// 導向行程頁面
+function goBookingPage(){
+  const protocol = window.location.protocol; 
+  const host = window.location.host;
+  const bookingPageURL = protocol+"//"+host+"/booking";
+
+  window.location.href = bookingPageURL; 
 }

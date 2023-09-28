@@ -29,6 +29,10 @@ footer{width:100%;height:100px;background-color: #757575;color:white;
 .signIn_message{
     color: red;
 }
+hr {border-width: 0px 0px 1px 0px;
+    border-color: #E8E8E8;
+    border-style: solid;}
+
 
 
 .popup {
