@@ -11,13 +11,13 @@ api_attraction_data = Blueprint('api_attraction_data', __name__)
 # 取得捷運站名稱列表
 @api_attraction_data.route("/api/mrts")
 def api_mrts():
-	result, status_code = try_dbconnect(try_content_mrtList)
+	result, status_code = try_dbconnect(try_mrtList)
 	return result, status_code
 
 # 取得景點資料列表
 @api_attraction_data.route("/api/attractions")
 def api_attractions():
-	result, status_code = try_dbconnect(try_content_attractionList)
+	result, status_code = try_dbconnect(try_attractionList)
 	return result, status_code
 
 # 根據景點編號取得景點資料
@@ -25,7 +25,7 @@ def api_attractions():
 def api_attractions_id(attractionId):
 	global g_attractionId
 	g_attractionId = attractionId
-	result, status_code = try_dbconnect(try_content_attractionIDdata)
+	result, status_code = try_dbconnect(try_attractionIDdata)
 	return result, status_code
 
 
@@ -50,7 +50,7 @@ def try_dbconnect(try_content):
 		db_connection.close()
 
 # try 取得捷運站名稱列表
-def try_content_mrtList(cursor):
+def try_mrtList(cursor):
 	query='''
 	SELECT MRT, COUNT(name) as attraction_Number 
 	FROM attractions GROUP BY MRT ORDER BY attraction_Number DESC
@@ -66,7 +66,7 @@ def try_content_mrtList(cursor):
 	return jsonify(response)
 
 # try 取得景點資料列表
-def try_content_attractionList(cursor):
+def try_attractionList(cursor):
 		keyword=request.args.get("keyword")
 		page=int(request.args.get("page"))
 		page_start=page*12
@@ -89,7 +89,7 @@ def try_content_attractionList(cursor):
 		return jsonify(response)
 
 # try 根據景點編號取得景點資料
-def try_content_attractionIDdata(cursor):
+def try_attractionIDdata(cursor):
 	cursor.execute("SELECT * FROM attractions WHERE id=%s",(g_attractionId,))
 	SQLdata=cursor.fetchall()
 	response_data=get_attractions_data(SQLdata)
