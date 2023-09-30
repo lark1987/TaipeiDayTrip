@@ -1,10 +1,6 @@
 from flask import *
-import mysql.connector
-from mysql.connector import pooling
 import json
-import re
 import jwt
-import datetime
 from datetime import datetime, timedelta
 
 app=Flask(__name__)

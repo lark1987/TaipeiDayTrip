@@ -1,9 +1,5 @@
 from flask import *
 import json
-import re
-import jwt
-import datetime
-from datetime import datetime, timedelta
 
 from . import db_config
 from . import member_token
@@ -42,6 +38,9 @@ def signin_data():
 			}
 		return jsonify(response),500
 
+
+
+
 # try 包裝
 def try_box(try_content):
 	try:
@@ -54,7 +53,6 @@ def try_box(try_content):
 			data = result
 			status_code = 200
 		return data, status_code
-		# return result,200
 	except Exception as e :  
 		error_message=str(e)
 		response={
@@ -66,6 +64,7 @@ def try_box(try_content):
 		cursor.close()
 		db_connection.close()
 
+# try 註冊功能
 def try_signUp(cursor,db_connection):
 	data = request.json
 	name=data["name"] 
@@ -87,6 +86,7 @@ def try_signUp(cursor,db_connection):
 	response = {"ok": True}
 	return jsonify(response)
 
+# try 登入功能
 def try_signIn(cursor,db_connection):
 	data = request.json
 	email=data["email"] 
