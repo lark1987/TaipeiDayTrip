@@ -34,6 +34,8 @@ bookingButton.addEventListener("click", function() {
             return
         }
         alert('get prime 成功，prime: ' + result.card.prime)
+
+        getOrder(result.card.prime)
     
     
         // send prime to your server, to pay with Pay by Prime API .
@@ -42,3 +44,49 @@ bookingButton.addEventListener("click", function() {
 });
 
 
+const cachedBookingdata=JSON.parse(sessionStorage.getItem("bookingdata"));
+console.log(cachedBookingdata)
+
+function getOrder(cardPrime){
+
+    const inputMemberName = document.querySelector(".inputMemberName").value;
+    const inputMemberMail = document.querySelector(".inputMemberMail").value;
+    const inputMemberPhone = document.querySelector(".inputMemberPhone").value;
+
+    const orderUrl = "/api/orders";
+    fetch(orderUrl, {
+        method: "POST", 
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization":token,
+        },
+        body:JSON.stringify({
+            "prime": cardPrime,
+            "order": {
+              "price": cachedBookingdata.price,
+              "trip": {
+                "attraction": {
+                  "id": cachedBookingdata.attraction.id,
+                  "name": cachedBookingdata.attraction.name,
+                  "address": cachedBookingdata.attraction.address,
+                  "image": cachedBookingdata.attraction.image,
+                },
+                "date": cachedBookingdata.date,
+                "time": cachedBookingdata.time,
+              },
+              "contact": {
+                "name": inputMemberName,
+                "email":inputMemberMail,
+                "phone":inputMemberPhone,
+              }
+            }
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)
+      })
+    .catch(error => {
+        console.log(error);
+    });
+}

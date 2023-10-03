@@ -3,6 +3,7 @@ from flask import *
 from module.attraction import api_attraction_data
 from module.member import api_member
 from module.booking import api_booking
+from module.order import api_order
 
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
@@ -11,6 +12,7 @@ app.config["TEMPLATES_AUTO_RELOAD"]=True
 app.register_blueprint(api_attraction_data)
 app.register_blueprint(api_member)
 app.register_blueprint(api_booking)
+app.register_blueprint(api_order)
 
 # Pages
 @app.route("/")
@@ -25,6 +27,7 @@ def booking():
 @app.route("/thankyou")
 def thankyou():
 	return render_template("thankyou.html")
+
 
 
 app.run(host="0.0.0.0", port=3000)

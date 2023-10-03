@@ -27,6 +27,7 @@ function getbooking(){
         getMemberCache()
         if(data.data){
             getdata(data);
+            sessionStorage.setItem("bookingdata", JSON.stringify(data.data));
         }
         else{
             console.log("null");
