@@ -1,3 +1,4 @@
+
 // TapPay 設置
 TPDirect.setupSDK('137044', 'app_aYW5sz94fqr6ZtVWP0y9W95wXht3gqkjb8uPua3eHvpX5yGMTLwgCQ8dUIWa', 'sandbox')
 TPDirect.card.setup({
@@ -17,7 +18,7 @@ TPDirect.card.setup({
     }
     });
 
-// TapPay 取得 Prime 金鑰
+// 取得 TapPay Prime 金鑰
 const bookingButton = document.querySelector(".booking_button");
 bookingButton.addEventListener("click", function() {
 
@@ -36,17 +37,11 @@ bookingButton.addEventListener("click", function() {
         alert('get prime 成功，prime: ' + result.card.prime)
 
         getOrder(result.card.prime)
-    
-    
-        // send prime to your server, to pay with Pay by Prime API .
-        // Pay By Prime Docs: https://docs.tappaysdk.com/tutorial/zh/back.html#pay-by-prime-api
     })
 });
 
-
+// 發送 TapPay Prime 金鑰 
 const cachedBookingdata=JSON.parse(sessionStorage.getItem("bookingdata"));
-console.log(cachedBookingdata)
-
 function getOrder(cardPrime){
 
     const inputMemberName = document.querySelector(".inputMemberName").value;
