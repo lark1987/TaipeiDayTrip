@@ -24,10 +24,6 @@
     width:200px;
 }
 
-.card_info {
-    
-}
-
 .card_info div{
     display: flex;
     align-items:center;
