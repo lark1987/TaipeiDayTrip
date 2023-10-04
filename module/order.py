@@ -16,7 +16,7 @@ def booking_create():
         orderID = insertSQL(data,token_id)
         
         if (orderID is not None):
-            orderStaus,orderMessage = sendTapPay(data,orderID)
+            orderStaus,orderMessage = sendTapPay(data,orderID,token_id)
             response = {
             "data": {
                 "number": orderID,
@@ -66,7 +66,7 @@ def insertSQL(data,token_id):
     return orderID
 
 # 發送付款資料給 TapPay
-def sendTapPay(data,orderID):
+def sendTapPay(data,orderID,token_id):
 
     prime = data["prime"]
     partnerKey = "partner_mexRYSQz71J1kGgbh5aJzIFfthnFjjXYeei5923mBaA6Atz4VdCWdoMh"
@@ -95,7 +95,7 @@ def sendTapPay(data,orderID):
     result = response.json()
 
     if response.status_code == 200:
-        orderSuccess(orderID)
+        orderSuccess(orderID,token_id)
         orderMessage = "付款成功"    
         print('交易成功')
     else:
@@ -104,11 +104,13 @@ def sendTapPay(data,orderID):
 
     return result["status"],orderMessage
 
-# 付款成功，更改訂單狀態
-def orderSuccess(orderID):
+# 付款成功，更改訂單狀態、刪除預定資料
+def orderSuccess(orderID,token_id):
     db_connection=db_config.connection_pool.get_connection()
     cursor=db_connection.cursor()
     cursor.execute("UPDATE orders SET status='已付款' WHERE orderID=%s",(orderID,))
+    cursor.execute("SET SQL_SAFE_UPDATES=0;")
+    cursor.execute("DELETE FROM bookings WHERE member_id=%s",(token_id,))
     db_connection.commit()
     cursor.close()
     db_connection.close()
