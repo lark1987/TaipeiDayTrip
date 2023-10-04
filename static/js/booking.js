@@ -94,9 +94,9 @@ function getMemberCache() {
         const helloMemberName = document.querySelector(".helloMemberName");
         helloMemberName.textContent=data.data.name;
         const inputMemberName = document.querySelector(".inputMemberName");
-        inputMemberName.placeholder =data.data.name;
+        inputMemberName.value=data.data.name;
         const inputMemberMail = document.querySelector(".inputMemberMail");
-        inputMemberMail.placeholder =data.data.email;
+        inputMemberMail.value=data.data.email;
     }
 }
 

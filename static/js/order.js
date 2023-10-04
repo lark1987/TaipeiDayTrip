@@ -18,15 +18,34 @@ TPDirect.card.setup({
     }
     });
 
-// 取得 TapPay Prime 金鑰
+let inputName ="";
+let inputMail ="";
+let inputPhone ="";
+
+// 行程訂購付款按鈕
 const bookingButton = document.querySelector(".booking_button");
 bookingButton.addEventListener("click", function() {
+
+    inputName = document.querySelector(".inputMemberName").value;
+    inputMail = document.querySelector(".inputMemberMail").value;
+    inputPhone = document.querySelector(".inputMemberPhone").value;
+
+    const checks = [inputName,inputMail,inputPhone]
+    const isValid = checks.every(check=>contentCheck(check));
+    if (!isValid) {return;}
+
+    getPrime()
+
+});
+
+// 取得 TapPay Prime 金鑰
+function getPrime(){
 
     const tappayStatus = TPDirect.card.getTappayFieldsStatus()
     console.log(tappayStatus)
 
     if (tappayStatus.canGetPrime === false) {
-        alert('can not get prime')
+        alert("付款資訊填寫錯誤")
         return
     }
     TPDirect.card.getPrime((result) => {
@@ -34,20 +53,14 @@ bookingButton.addEventListener("click", function() {
             alert('get prime error ' + result.msg)
             return
         }
-        alert('get prime 成功，prime: ' + result.card.prime)
-
         getOrder(result.card.prime)
     })
-});
+}
 
 // 發送 TapPay Prime 金鑰 
-const cachedBookingdata=JSON.parse(sessionStorage.getItem("bookingdata"));
 function getOrder(cardPrime){
 
-    const inputMemberName = document.querySelector(".inputMemberName").value;
-    const inputMemberMail = document.querySelector(".inputMemberMail").value;
-    const inputMemberPhone = document.querySelector(".inputMemberPhone").value;
-
+    const cachedBookingdata=JSON.parse(sessionStorage.getItem("bookingdata"));
     const orderUrl = "/api/orders";
     fetch(orderUrl, {
         method: "POST", 
@@ -70,9 +83,9 @@ function getOrder(cardPrime){
                 "time": cachedBookingdata.time,
               },
               "contact": {
-                "name": inputMemberName,
-                "email":inputMemberMail,
-                "phone":inputMemberPhone,
+                "name": inputName,
+                "email":inputMail,
+                "phone":inputPhone,
               }
             }
         })
@@ -81,9 +94,17 @@ function getOrder(cardPrime){
     .then(data => {
         console.log(data)
         window.location.href = "/thankyou?number=" + data.data.number;
-
       })
     .catch(error => {
         console.log(error);
     });
+}
+
+// 檢核輸入框
+function contentCheck(content){
+    if (content === "") {
+        alert("聯絡資訊尚未填寫");
+        return false;
+    }
+    return true;
 }

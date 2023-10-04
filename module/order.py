@@ -10,37 +10,41 @@ api_order = Blueprint('api_order', __name__)
 
 @api_order.route("/api/orders",methods=["POST"])
 def booking_create():
-
-    data = request.json
-    orderID = insertSQL(data)
-    orderStaus,orderMessage = sendTapPay(data,orderID)
-
-    if (orderID is not None):
-        response = {
-        "data": {
-            "number": orderID,
-            "payment": {
-                "status": orderStaus,
-                "message": orderMessage,
+    try:
+        data = request.json
+        token_id, token_name, token_email = member_token.token_decode()
+        orderID = insertSQL(data,token_id)
+        
+        if (orderID is not None):
+            orderStaus,orderMessage = sendTapPay(data,orderID)
+            response = {
+            "data": {
+                "number": orderID,
+                "payment": {
+                    "status": orderStaus,
+                    "message": orderMessage,
+                }
+            }}
+            return jsonify(response),200
+        else:
+            response = {
+            "error": True,
+            "message": "訂單建立失敗，輸入不正確或其他原因"
             }
-        }}
-        return jsonify(response)
-    else:
-        response = {
-        "error": True,
-        "message": "訂單建立失敗，輸入不正確或其他原因"
-        }
-        return jsonify(response)
+            return jsonify(response),400
+    except Exception as e :  
+        error_message=str(e)
+        response={
+            "error":True,
+            "message": error_message
+            }
+        return jsonify(response),500
 
 # 訂購資訊存入 MySQL
-def insertSQL(data):
+def insertSQL(data,token_id):
 
-    # 會員編號
-    token_id, token_name, token_email = member_token.token_decode()
-
-    # 訂單編號
     currentTime = datetime.now()
-    orderID = currentTime.strftime("ORD%Y%m%d%H%M%S")
+    orderID = currentTime.strftime("O%Y%m%d%H%M%S")+str(token_id)
 
     db_connection=db_config.connection_pool.get_connection()
     cursor=db_connection.cursor()
@@ -108,3 +112,4 @@ def orderSuccess(orderID):
     db_connection.commit()
     cursor.close()
     db_connection.close()
+
