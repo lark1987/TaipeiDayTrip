@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台北一日遊</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/basic.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/thankyou.css">
+</head>
+<body>
+    <div class="header_load"></div>
+    <div class="popup_load"></div>
+    <div class="container">
+        <div class="bigtext">
+            行程預定成功<br>
+            您的訂單編號如下<br>
+        </div>
+        <div class="orderNumber">
+            這裡要放訂單編號
+        </div>
+        <div>
+            請記住此編號，或到會員中心查詢歷史訂單。
+        </div>
+    </div>
+    <div class="footer_load"></div>
+
+</body>
+
+<script src="../static/js/basic.js"></script>
+<script src="../static/js/member.js"></script>
+<script>
+    let searchParams = new URLSearchParams(window.location.search);
+    let orderNumber = searchParams.get("number");
+    const orderNumberDiv = document.querySelector(".orderNumber");
+    orderNumberDiv.textContent=orderNumber;
+</script>
+
+
+</html>

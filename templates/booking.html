@@ -28,20 +28,20 @@
 
 
             <br><hr><br>
-            <div class="member_info">
             <div class="text19">您的聯絡資訊</div>
+            <div class="member_info">
             聯絡姓名：<input type="text" class="inputMemberName"><br>
             聯絡信箱：<input type="text" class="inputMemberMail"><br>
-            手機號碼：<input type="text"><br>
+            手機號碼：<input type="text" class="inputMemberPhone"><br>
             <b>請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</b>
             </div>
 
             <br><hr><br>
-            <div class="member_info">
             <div class="text19">信用卡付款資訊</div>
-            卡片號碼：<input type="text" placeholder="**** **** **** ****"><br>
-            過期時間：<input type="text" placeholder="MM/YY"><br>
-            驗證密碼：<input type="text" placeholder="CVV"><br>
+            <div class="card_info">
+            <div>卡片號碼：<div class="tpfield" id="card-number"></div></div><br>
+            <div>過期時間：<div class="tpfield" id="card-expiration-date"></div></div><br>
+            <div>驗證密碼：<div class="tpfield" id="card-ccv"></div></div><br>
             </div>
 
             <br><hr><br>
@@ -50,6 +50,7 @@
             <button class="booking_button">確認訂購並付款</button>
             </div>
             <br>
+
         </div>
         <br>
         <div class="noBookingShow hide">目前沒有任何待預定的行程</div>
@@ -58,8 +59,13 @@
     <div class="footer_load"></div>
 
 </body>
+
 <script src="../static/js/basic.js"></script>
 <script src="../static/js/member.js"></script>
 <script src="../static/js/booking.js"></script>
+<script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
+<script src="../static/js/order.js"></script>
+
+
 
 </html>

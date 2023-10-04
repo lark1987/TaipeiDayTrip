@@ -27,6 +27,7 @@ function getbooking(){
         getMemberCache()
         if(data.data){
             getdata(data);
+            sessionStorage.setItem("bookingdata", JSON.stringify(data.data));
         }
         else{
             console.log("null");
@@ -93,9 +94,9 @@ function getMemberCache() {
         const helloMemberName = document.querySelector(".helloMemberName");
         helloMemberName.textContent=data.data.name;
         const inputMemberName = document.querySelector(".inputMemberName");
-        inputMemberName.placeholder =data.data.name;
+        inputMemberName.value=data.data.name;
         const inputMemberMail = document.querySelector(".inputMemberMail");
-        inputMemberMail.placeholder =data.data.email;
+        inputMemberMail.value=data.data.email;
     }
 }
 
