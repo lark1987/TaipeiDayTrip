@@ -80,6 +80,8 @@ function getOrder(cardPrime){
     .then(response => response.json())
     .then(data => {
         console.log(data)
+        window.location.href = "/thankyou?number=" + data.data.number;
+
       })
     .catch(error => {
         console.log(error);
