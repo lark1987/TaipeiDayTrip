@@ -5,6 +5,9 @@ from module.member import api_member
 from module.booking import api_booking
 from module.order import api_order
 
+from module.db_check import check_database_connection
+check_database_connection()
+
 app=Flask(__name__)
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
@@ -27,7 +30,5 @@ def booking():
 @app.route("/thankyou")
 def thankyou():
 	return render_template("thankyou.html")
-
-
 
 app.run(host="0.0.0.0", port=3000)
