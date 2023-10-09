@@ -3,6 +3,9 @@ import json
 from datetime import datetime
 import requests
 
+import os
+from dotenv import load_dotenv
+
 from . import db_config
 from . import member_token
 
@@ -68,18 +71,20 @@ def insertSQL(data,token_id):
 # 發送付款資料給 TapPay
 def sendTapPay(data,orderID,token_id):
 
+    load_dotenv()
+    PARTNER_KEY = os.getenv("PARTNER_KEY")
+
     prime = data["prime"]
-    partnerKey = "partner_mexRYSQz71J1kGgbh5aJzIFfthnFjjXYeei5923mBaA6Atz4VdCWdoMh"
     merchant_id = "Lark1987_ESUN"
 
     url = "https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime"
     headers = {
         'Content-Type': 'application/json',
-        'x-api-key': partnerKey,
+        'x-api-key': PARTNER_KEY,
     }
     data = {
         "prime": prime,
-        "partner_key": partnerKey,
+        "partner_key": PARTNER_KEY,
         "merchant_id": merchant_id,
         "details":"TapPay Test",
         "amount": data["order"]["price"],

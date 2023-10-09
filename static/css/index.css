@@ -11,11 +11,13 @@ body{font-weight:bold;}
 
 .search_container{display:flex; margin-top:20px;}
 #search_input{width:400px;height:26px;font-weight:bold; border:none; padding: 10px 10px;}
-#search_button{width:60px;height:46px;}
+#search_button{width:60px;height:46px;cursor: pointer;}
 
 .scroll_container {display:flex;margin-top:200px;width:100%;height:20px;}
 .list_container {overflow: hidden;white-space: nowrap;display:flex; }
-.list_container li {list-style: none;margin:0 10px;}
+.list_container li {list-style: none;margin:0 10px;cursor: pointer;}
+.list_container li:hover{color: blue}
+
 
 .main{margin:20px auto;
       display:grid;justify-content:center;justify-items:center;
@@ -27,7 +29,8 @@ body{font-weight:bold;}
       grid-template-rows:1fr 1fr 1fr;
       grid-template-columns:1fr 1fr 1fr 1fr ; }
 
-.attraction{width:280px;margin-bottom:20px;}
+.attraction{width:280px;margin-bottom:20px;cursor: pointer;}
+.attraction:hover{border: 3px solid black}
 .img_container{width:100%;position:relative;}
 .attraction img{width:100%;height:200px;object-fit:cover;display: block;
 }

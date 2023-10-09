@@ -157,6 +157,20 @@ bookingButton.addEventListener("click", () => {
         bookingPrice = "2500"
         };
     
+    
+    const selectedDate = new Date(bookingDate);
+    const today = new Date();
+    if (selectedDate <= today) {
+        alert("請選擇今天之後的日期");
+        return;
+    }
+    
+    if (!Array.from(radioInputs).some(input => input.checked) || bookingDate === "") {
+      alert("請選擇日期和時間");
+      return;
+    }
+
+    
     let token = localStorage.getItem("token");
     if(token){
         const bookingUrl = "/api/booking";
@@ -195,12 +209,10 @@ bookingButton.addEventListener("click", () => {
 
 })
 
-
 // 導向行程頁面
 function goBookingPage(){
   const protocol = window.location.protocol; 
   const host = window.location.host;
   const bookingPageURL = protocol+"//"+host+"/booking";
-
   window.location.href = bookingPageURL; 
 }

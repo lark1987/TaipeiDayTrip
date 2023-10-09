@@ -7,6 +7,7 @@ header.innerHTML = `
         <div class="header_option">
             <span class="header_bookingButton">預定行程　</span>
             <span class="loginButton"></span>
+            <span class="loading">　Loading...</span>
         </div>
     </div>
     </header>

@@ -17,6 +17,7 @@ function tokenCheck(){
         })
         .then(response => response.json())
         .then(data => { 
+            document.querySelector(".loading").style.display = "none";
             logoutButtonSet()
             setMemberCache(data)
           })
@@ -25,6 +26,7 @@ function tokenCheck(){
         });
     }
     else{
+        document.querySelector(".loading").style.display = "none";
         loginButtonSet()
     }
 }

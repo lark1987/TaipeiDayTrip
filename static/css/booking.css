@@ -7,7 +7,8 @@
 .attraction_name{color:#448899;}
 .booking_info{padding: 10px 30px;}
 .booking_info span{line-height:30px}
-.booking_delete{width: 30px; height: 30px;position: absolute; right:0;top:0}
+.booking_delete{width: 30px; height: 30px;position: absolute; right:0;top:0;cursor: pointer;}
+.booking_delete:hover{width: 40px; height: 40px;}
 
 .text19{
     font-size: 19px;
@@ -42,7 +43,7 @@
 }
 
 .booking_button{
-    width:173px;
+    width:173px;cursor: pointer;
     font-size:19px;color: white;
     border:none;border-radius: 5px;padding:10px 20px;
     background-color:#448899;}
