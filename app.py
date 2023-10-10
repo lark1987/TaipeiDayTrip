@@ -30,6 +30,34 @@ def booking():
 @app.route("/thankyou")
 def thankyou():
 	return render_template("thankyou.html")
+@app.route("/member")
+def member():
+	return render_template("member.html")
+
+
+
+
+import os
+UPLOAD_FOLDER = 'uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return jsonify({'message': '未選擇檔案'}), 400
+
+    file = request.files['file']
+
+    if file.filename == '':
+        return jsonify({'message': '未選擇檔案'}), 400
+
+    if file:
+        # 將檔案儲存到指定目錄
+        filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+        file.save(filename)
+        return jsonify({'message': '檔案上傳成功'}), 200
+
+
 
 app.run(host="0.0.0.0", port=3000)
 

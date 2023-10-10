@@ -101,6 +101,13 @@ def try_signIn(cursor,db_connection):
 	email=data["email"] 
 	password=data["password"]
 
+	if not is_valid_password(password) or not is_valid_email(email) :
+		response={
+		"error": True,
+		"message":"資料格式錯誤"
+		}
+		return jsonify(response),400
+
 	cursor.execute("SELECT * FROM members WHERE email = %s", (email,))
 	result=cursor.fetchone()
 	if result is not None:
