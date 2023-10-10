@@ -1,5 +1,6 @@
 from flask import *
 import json
+import re
 
 from . import db_config
 from . import member_token
@@ -66,10 +67,18 @@ def try_box(try_content):
 
 # try 註冊功能
 def try_signUp(cursor,db_connection):
+
 	data = request.json
 	name=data["name"] 
 	email=data["email"] 
 	password=data["password"]
+
+	if not is_valid_name(name) or not is_valid_password(password) or not is_valid_email(email) :
+		response={
+		"error": True,
+		"message":"資料格式錯誤"
+		}
+		return jsonify(response),400
 
 	cursor.execute("SELECT email FROM members;")
 	email_list = [email[0] for email in cursor.fetchall()]
@@ -108,3 +117,20 @@ def try_signIn(cursor,db_connection):
 				"message": "登入失敗，帳號或密碼輸入錯誤！"
 				}
 			return jsonify(response),400
+
+
+
+# 檢核功能
+def is_valid_name(name):
+    return len(name.strip()) > 0
+def is_valid_email(email):
+    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    return re.match(pattern, email) is not None
+def is_valid_password(password):
+    # pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.{8,})'，要求至少一個大小寫、數字、位數
+	pattern = r'^(?=.{3,})'
+	return re.match(pattern, password) is not None
+
+
+
+
