@@ -72,7 +72,7 @@ def insertSQL(data,token_id):
 def sendTapPay(data,orderID,token_id):
 
     load_dotenv()
-    PARTNER_KEY = os.getenv("PARTNER_KEY")
+    PARTNER_KEY = os.getenv("TAPPAY_PARTNER_KEY")
 
     prime = data["prime"]
     merchant_id = "Lark1987_ESUN"

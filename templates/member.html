@@ -15,14 +15,16 @@
             <h1>上傳圖片或檔案</h1>
             <form id="upload-form" enctype="multipart/form-data">
                 <input type="file" name="file" id="file-input">
-                <button type="button" onclick="uploadFile()">上傳</button>
+                <button type="button" class="upload_button">上傳</button>
             </form>
             <p id="upload-status"></p>
 
         </div>
+        <br>
         <div>
             會員基本資料
         </div>
+        <br>
         <div>
             歷史訂單紀錄
         </div>
@@ -35,33 +37,6 @@
 
 <script src="../static/js/basic.js"></script>
 <script src="../static/js/member.js"></script>
-
-<script>
-    function uploadFile() {
-            const fileInput = document.getElementById('file-input');
-            const file = fileInput.files[0];
-            if (!file) {
-                alert('請選擇一個檔案');
-                return;
-            }
-
-            const formData = new FormData();
-            formData.append('file', file);
-
-            fetch('/upload', {
-                method: 'POST',
-                body: formData,
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('upload-status').innerText = data.message;
-            })
-            .catch(error => {
-                console.error('錯誤：', error);
-            });
-        }
-
-</script>
-
+<script src="../static/js/upload.js"></script>
 
 </html>

@@ -4,6 +4,7 @@ from module.attraction import api_attraction_data
 from module.member import api_member
 from module.booking import api_booking
 from module.order import api_order
+from module.upload import api_upload
 
 from module.db_check import check_database_connection
 check_database_connection()
@@ -16,6 +17,7 @@ app.register_blueprint(api_attraction_data)
 app.register_blueprint(api_member)
 app.register_blueprint(api_booking)
 app.register_blueprint(api_order)
+app.register_blueprint(api_upload)
 
 # Pages
 @app.route("/")
@@ -37,25 +39,9 @@ def member():
 
 
 
-import os
-UPLOAD_FOLDER = 'uploads'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-@app.route('/upload', methods=['POST'])
-def upload_file():
-    if 'file' not in request.files:
-        return jsonify({'message': '未選擇檔案'}), 400
 
-    file = request.files['file']
 
-    if file.filename == '':
-        return jsonify({'message': '未選擇檔案'}), 400
-
-    if file:
-        # 將檔案儲存到指定目錄
-        filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-        file.save(filename)
-        return jsonify({'message': '檔案上傳成功'}), 200
 
 
 
