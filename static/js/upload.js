@@ -21,6 +21,7 @@ function uploadFile() {
     })
     .then(response => response.json())
     .then(data => {
+        
         document.getElementById('upload-status').innerText = data.message;
     })
     .catch(error => {
