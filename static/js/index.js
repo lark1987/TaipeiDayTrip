@@ -1,28 +1,16 @@
+import * as commonTool from "./common_tool.js"
 
 let nextPage = 0;
 let search_value = "";
 
 window.addEventListener("load", () => {
-    url="/api/mrts"
+    let url="/api/mrts"
     getData(url);
 })
 
-// 獲取緩存資料
-function getCacheData(url) {
-    const cachedData=sessionStorage.getItem(url);
-    if (cachedData) {
-        return JSON.parse(cachedData);
-    }
-}
-
-// 儲存緩存資料
-function setCacheData(url, data) {
-    sessionStorage.setItem(url, JSON.stringify(data));
-}
-
 // 連線取得資料、存入緩存，或使用緩存資料
 function getData(url) {
-    const cachedData = getCacheData(url);
+    const cachedData = commonTool.getCacheData(url);
     if (cachedData) {
         if(url==="/api/mrts"){
             handleMRT(cachedData);
@@ -39,11 +27,11 @@ function getData(url) {
         })
         .then(data => {
             if(url==="/api/mrts"){
-                setCacheData(url, data); 
+                commonTool.setCacheData(url, data); 
                 handleMRT(data);
                 return;
             }
-            setCacheData(url, data); 
+            commonTool.setCacheData(url, data); 
             handleData(data);
         })
         .catch(error => {
@@ -150,7 +138,7 @@ search_button.addEventListener("click", function(){
 
 // 關鍵字搜尋加載資料
 function searchData (search_value) {
-    url="/api/attractions?page=0&keyword="+search_value
+    let url="/api/attractions?page=0&keyword="+search_value
 
     const mains = document.querySelectorAll(".main");
     mains.forEach(main => {

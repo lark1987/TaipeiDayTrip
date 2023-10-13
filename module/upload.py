@@ -34,8 +34,6 @@ def upload_file():
         expiration_time = datetime.now() + timedelta(hours=1)
         image_url = blob.generate_signed_url(expiration=expiration_time, method='GET')
 
-        print(image_url)
-
         response = {
             "message": "檔案上傳成功",
             "image_url":image_url

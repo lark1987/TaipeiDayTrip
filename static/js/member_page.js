@@ -1,9 +1,11 @@
 
+
+// 個人頭像上傳按鈕
 upload_button = document.querySelector(".upload_button");
 upload_button.addEventListener("click", function() {
     uploadFile()
 })
-
+// 個人頭像上傳功能
 function uploadFile() {
     const fileInput = document.getElementById('file-input');
     const file = fileInput.files[0];
@@ -23,6 +25,9 @@ function uploadFile() {
     .then(data => {
         
         document.getElementById('upload-status').innerText = data.message;
+        
+        document.querySelector(".profile_photo").setAttribute("src",data.image_url);
+
     })
     .catch(error => {
         console.error('錯誤：', error);

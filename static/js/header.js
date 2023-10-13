@@ -5,7 +5,8 @@ header.innerHTML = `
     <div class="header_content">
         <div class="header_LOGO">台北一日遊</div>
         <div class="header_option">
-            <span class="header_bookingButton">預定行程　</span>
+            <span class="header_memberpageButton">會員中心　</span>
+            <span class="header_bookingPageButton">預定行程　</span>
             <span class="loginButton"></span>
             <span class="loading">　Loading...</span>
         </div>
@@ -66,7 +67,7 @@ window.location.href = homepageURL;
 }) 
 
 // 預定行程按鈕
-const headerBookingButton = document.querySelector(".header_bookingButton");
+const headerBookingButton = document.querySelector(".header_bookingPageButton");
 headerBookingButton.addEventListener("click", ()=>{
 
     let token = localStorage.getItem("token");
@@ -75,6 +76,23 @@ headerBookingButton.addEventListener("click", ()=>{
         const host = window.location.host;
         const bookingPageURL = protocol+"//"+host+"/booking";
         window.location.href = bookingPageURL; }
+    else{
+        document.querySelector(".signIn_container").classList.remove("hide");
+        document.querySelector(".signUp_container").classList.add("hide");
+        document.querySelector(".overlay").classList.remove("hide");
+    }
+}) 
+
+// 會員中心按鈕
+const memberpageButton = document.querySelector(".header_memberpageButton");
+memberpageButton.addEventListener("click", ()=>{
+
+    let token = localStorage.getItem("token");
+    if(token){
+        const protocol = window.location.protocol; 
+        const host = window.location.host;
+        const memberpageButtonURL = protocol+"//"+host+"/member";
+        window.location.href = memberpageButtonURL; }
     else{
         document.querySelector(".signIn_container").classList.remove("hide");
         document.querySelector(".signUp_container").classList.add("hide");

@@ -15,7 +15,6 @@ def check_database_connection(interval=14400):
         cursor=db_connection.cursor()
         cursor.execute("SELECT 1")
         result=cursor.fetchone()
-        print("資料庫連線成功")
         cursor.close()
         db_connection.close()
     except mysql.connector.Error as error:
