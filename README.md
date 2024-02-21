@@ -12,3 +12,9 @@
 
 <img src='./architecture.png' width='500'>
 
+## Database
+
+<img src='./database.png' width='500'>
+
+
+
