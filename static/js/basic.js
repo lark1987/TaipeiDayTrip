@@ -5,7 +5,7 @@ header.innerHTML = `
     <div class="header_content">
         <div class="header_LOGO">台北一日遊</div>
         <div class="header_option">
-            <span class="header_bookingButton">預定行程　</span>
+            <span class="header_bookingButton">預訂行程　</span>
             <span class="loginButton"></span>
         </div>
     </div>
@@ -14,7 +14,7 @@ header.innerHTML = `
 // footer
 const footer = document.querySelector(".footer_load");
 footer.innerHTML = `
-    <footer id="footer"> COPYRIGHT @ 2023台北一日遊  </footer>
+    <footer id="footer"> COPYRIGHT @ 台北一日遊  </footer>
 `;
 // popup
 const popup = document.querySelector(".popup_load");
